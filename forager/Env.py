@@ -52,7 +52,7 @@ class ForagerEnv:
     def step(self, action: Action):
         n = grid.step(self._state, self._size, action)
 
-        r = 0
+        r = 0.
         if n in self._object_configs:
             obj = self._object_configs[n]
             r = obj.reward(self.rng, self._clock)
