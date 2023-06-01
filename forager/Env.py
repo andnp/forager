@@ -1,4 +1,3 @@
-import json
 import numpy as np
 import numba as nb
 import forager._utils.numba as nbu
@@ -127,13 +126,12 @@ class ForagerEnv:
 
 @nbu.njit
 def get_unpopulated(size: Size, objs: Dict[Coords, Any], rng: np.random.Generator):
-    for _ in range(20):
+    for _ in range(50):
         x = rng.integers(0, size[0])
         y = rng.integers(0, size[1])
 
         c = (x, y)
-        # idx = ravel_idx(c, size)
         if c not in objs:
             return c
 
-    raise Exception('Uh-oh! We could not find an open coordinate after 20 tries!')
+    raise Exception('Uh-oh! We could not find an open coordinate after 50 tries!')
