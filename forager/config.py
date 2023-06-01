@@ -8,7 +8,7 @@ from typing import List
 
 from forager.exceptions import ForagerInvalidConfigException
 from forager.interface import Coords, RawRGB, Size
-from forager.logging import logger
+from forager.logger import logger
 
 class ForagerObject:
     def __init__(self, name: str):

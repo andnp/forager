@@ -10,7 +10,7 @@ from typing import Any, Dict, List
 from forager.config import ForagerConfig, ForagerObject, load_config, sanity_check
 from forager.exceptions import ForagerInvalidConfigException
 from forager.interface import Action, Coords, Size
-from forager.logging import logger
+from forager.logger import logger
 from forager.observations import get_vision_by_name
 
 
