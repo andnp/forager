@@ -12,21 +12,25 @@ def get_vision_by_name(state: Coords, size: Size, ap_size: Size, objs: Dict[Coor
     ax = int(ap_size[0] // 2)
     ay = int(ap_size[1] // 2)
 
-    mi_x = max(state[0] - ax - 1, 0)
-    ma_x = min(state[0] + ax, size[0])
+    mi_x = max(state[0] - ax, 0)
+    ma_x = min(state[0] + ax + 1, size[0])
 
-    mi_y = max(state[1] - ay - 1, 0)
-    ma_y = min(state[1] + ay, size[1])
+    mi_y = max(state[1] - ay, 0)
+    ma_y = min(state[1] + ay + 1, size[1])
+
+    b_dim = names.index('border')
+    out[:, :, b_dim] = 1
 
     for i, x in enumerate(range(mi_x, ma_x)):
         for j, y in enumerate(range(mi_y, ma_y)):
+            # handle border vision
+            jr = ap_size[1] - j - 1
+            out[jr, i, b_dim] = 0
+
             c = (x, y)
-            print(c)
-            # idx = ravel_idx(c, size)
             if c in objs:
                 obj = objs[c]
                 d = names.index(obj)
-                print(d, obj)
-                out[i, j, d] = 1
+                out[jr, i, d] = 1
 
     return out
