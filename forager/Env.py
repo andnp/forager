@@ -61,11 +61,7 @@ class ForagerEnv:
                 n = self._state
 
             if obj.collectable:
-                del self._object_configs[n]
-                del self._object_names[n]
-
-                delta = obj.regen_delay(self.rng, self._clock)
-                self._to_respawn[self._clock + delta].append(obj)
+                self.remove_object(n, obj)
 
         obs = get_vision_by_name(n, self._size, self._ap_size, self._object_names, self._names)
         self._state = n
@@ -81,6 +77,15 @@ class ForagerEnv:
 
         self._object_names[coords] = obj.name
         self._object_configs[coords] = obj
+
+    def remove_object(self, coords: Coords, obj: ForagerObject):
+        del self._object_configs[coords]
+        del self._object_names[coords]
+
+        delta = obj.regen_delay(self.rng, self._clock)
+
+        if delta is not None:
+            self._to_respawn[self._clock + delta].append(obj)
 
     def _respawn(self):
         if self._clock not in self._to_respawn:

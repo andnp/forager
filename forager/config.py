@@ -1,31 +1,12 @@
 import json
-import numpy as np
 import forager._utils.config as cu
 
-from abc import abstractmethod
 from dataclasses import dataclass
 from typing import List
 
 from forager.exceptions import ForagerInvalidConfigException
-from forager.interface import Coords, RawRGB, Size
+from forager.interface import Size, ForagerObject
 from forager.logger import logger
-
-class ForagerObject:
-    def __init__(self, name: str):
-        self.name = name
-
-        self.freq: float | None = None
-        self.collectable: bool = True
-        self.blocking: bool = False
-        self.location: Coords | None = None
-        self.color: RawRGB | None = None
-
-    def regen_delay(self, rng: np.random.Generator, clock: int) -> int:
-        return rng.integers(10, 100)
-
-    @abstractmethod
-    def reward(self, rng: np.random.Generator, clock: int) -> float:
-        raise NotImplementedError()
 
 @dataclass
 class ForagerConfig:

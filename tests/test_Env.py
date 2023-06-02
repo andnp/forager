@@ -3,8 +3,7 @@ import unittest
 import numpy as np
 from forager.Env import ForagerEnv
 from forager.config import ForagerConfig
-from forager.objects.Flower import Flower
-from forager.objects.Wall import Wall
+from forager.objects import Flower, Wall
 
 class TestForagerEnv(unittest.TestCase):
     def test_pickleable(self):
@@ -56,8 +55,8 @@ class TestForagerEnv(unittest.TestCase):
         config = ForagerConfig(
             size=7,
             objects=[
-                Wall((3, 4)),
-                Wall((3, 5)),
+                Wall(loc=(3, 4)),
+                Wall(loc=(3, 5)),
             ],
         )
         env = ForagerEnv(config)
@@ -81,9 +80,9 @@ class TestForagerEnv(unittest.TestCase):
         config = ForagerConfig(
             size=7,
             objects=[
-                Wall((3, 4)),
-                Wall((3, 5)),
-                Wall((0, 2)),
+                Wall(loc=(3, 4)),
+                Wall(loc=(3, 5)),
+                Wall(loc=(0, 2)),
             ],
             aperture=3,
         )
