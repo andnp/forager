@@ -39,15 +39,12 @@ class TestForagerEnv(unittest.TestCase):
         self.assertEqual(env._ap_size, (5, 1))
 
         # can add objects
-        flower = Flower()
-        flower.freq = 0.1
         config = ForagerConfig(
             size=10,
-            objects=[
-                flower
-            ],
+            objects=[],
         )
         env = ForagerEnv(config)
+        env.generate_objects(0.1, Flower)
 
         self.assertEqual(len(env._object_configs), int(100 * 0.1))
 
@@ -122,13 +119,9 @@ class TestForagerEnv(unittest.TestCase):
         self.assertTrue(np.allclose(x[:, :, 0], expected_0))
 
     def test_respawn(self):
-        flower = Flower()
-        flower.freq = None
-        flower.location = (3, 4)
-
         config = ForagerConfig(
             size=7,
-            objects=[flower],
+            objects=[Flower((3, 4))],
             aperture=3,
         )
         env = ForagerEnv(config, seed=1)

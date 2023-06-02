@@ -1,6 +1,10 @@
+import numpy as np
 import forager._utils.numba as nbu
-from forager.interface import Action, Coords
+
+from typing import Any, Dict, Set
 from forager.exceptions import ForagerInvalidAction
+from forager.interface import Action, Coords, Size
+from forager.logger import logger
 
 @nbu.njit
 def step(state: Coords, size: Coords, action: Action) -> Coords:
@@ -44,3 +48,24 @@ def right(c: Coords, s: Coords) -> Coords:
         min(c[0] + 1, s[0]),
         c[1],
     )
+
+_has_logged = False
+def sample_unpopulated(rng: np.random.Generator, size: Size, objs: Dict[Coords, Any], exclusions: Set[Coords] = set()):
+    global _has_logged
+
+    i = 0
+    c = None
+    for i in range(10):
+        x = rng.integers(0, size[0])
+        y = rng.integers(0, size[1])
+
+        c = (x, y)
+        if c not in objs and c not in exclusions:
+            return c
+
+    if i > 5 and not _has_logged:
+        _has_logged = True
+        logger.warn('Running into many collisions finding empty places for objects!')
+
+    assert c is not None, "Impossible code path"
+    return c

@@ -5,12 +5,13 @@ import forager._utils.config as cu
 import forager.grid as grid
 
 from collections import defaultdict
-from typing import Any, Dict, List
+from typing import Callable, Dict, List
 
-from forager.config import ForagerConfig, ForagerObject, load_config, sanity_check
+from forager.config import ForagerConfig, load_config, sanity_check
 from forager.exceptions import ForagerInvalidConfigException
 from forager.interface import Action, Coords, Size
 from forager.logger import logger
+from forager.objects import ForagerObject
 from forager.observations import get_vision_by_name
 
 
@@ -26,11 +27,11 @@ class ForagerEnv:
 
         # parse configuration
         self._c = sanity_check(config)
-        self._size: Size = cu.to_tuple(config.size)
-        self._ap_size: Size = cu.to_tuple(config.aperture)
+        self._size: Size = cu.to_tuple(self._c.size)
+        self._ap_size: Size = cu.to_tuple(self._c.aperture)
 
         _names = set([
-            obj.name for obj in config.objects
+            obj.name for obj in self._c.objects
         ])
         _names |= {'border'}
         self._names: List[str] = nbu.List(sorted(_names))
@@ -47,7 +48,9 @@ class ForagerEnv:
             int(self._size[0] // 2),
             int(self._size[1] // 2),
         )
-        self._populate()
+
+        for obj in self._c.objects:
+            self.add_object(obj)
 
     def step(self, action: Action):
         n = grid.step(self._state, self._size, action)
@@ -70,13 +73,21 @@ class ForagerEnv:
 
         return (obs, r)
 
-    def add_object(self, coords: Coords, obj: ForagerObject):
+    def add_object(self, obj: ForagerObject):
+        coords = obj.get_location(self._state, self._size, self._object_names, self.rng)
+
         if coords in self._object_names:
             prior = self._object_names[coords]
             logger.warn(f'Object already found at {coords}: {prior}. Replacing with {obj.name}')
 
         self._object_names[coords] = obj.name
         self._object_configs[coords] = obj
+
+    def generate_objects(self, freq: float, factory: Callable[[], ForagerObject]):
+        size = self._size[0] * self._size[1]
+        for _ in range(int(size * freq)):
+            obj = factory()
+            self.add_object(obj)
 
     def remove_object(self, coords: Coords, obj: ForagerObject):
         del self._object_configs[coords]
@@ -92,30 +103,9 @@ class ForagerEnv:
             return
 
         for obj in self._to_respawn[self._clock]:
-            if obj.location is not None:
-                coords = obj.location
-            else:
-                coords = sample_unpopulated(self._state, self._size, self._object_names, self.rng)
-
-            self.add_object(coords, obj)
+            self.add_object(obj)
 
         del self._to_respawn[self._clock]
-
-    def _populate(self):
-        # first check for hard-coded locations
-        for conf in self._c.objects:
-            if conf.location is not None:
-                self.add_object(conf.location, conf)
-
-        # then add sampled items
-        size = self._size[0] * self._size[1]
-
-        for conf in self._c.objects:
-            if conf.freq is None: continue
-
-            for _ in range(int(size * conf.freq)):
-                coords = sample_unpopulated(self._state, self._size, self._object_names, self.rng)
-                self.add_object(coords, conf)
 
     def _init_object_store(self):
         self._object_names = nbu.Dict.empty(
@@ -130,15 +120,3 @@ class ForagerEnv:
 
     def __setstate__(self, state):
         self._init_object_store()
-
-@nbu.njit
-def sample_unpopulated(state: Coords, size: Size, objs: Dict[Coords, Any], rng: np.random.Generator):
-    for _ in range(50):
-        x = rng.integers(0, size[0])
-        y = rng.integers(0, size[1])
-
-        c = (x, y)
-        if c not in objs and c != state:
-            return c
-
-    raise Exception('Uh-oh! We could not find an open coordinate after 50 tries!')
