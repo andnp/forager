@@ -94,6 +94,8 @@ class ForagerEnv:
 
             self.add_object(coords, obj)
 
+        del self._to_respawn[self._clock]
+
     def _populate(self):
         # first check for hard-coded locations
         for conf in self._c.objects:
