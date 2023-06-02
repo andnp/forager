@@ -95,7 +95,7 @@ class ForagerEnv:
             if obj.location is not None:
                 coords = obj.location
             else:
-                coords = get_unpopulated(self._size, self._object_names, self.rng)
+                coords = get_unpopulated(self._state, self._size, self._object_names, self.rng)
 
             self.add_object(coords, obj)
 
@@ -114,7 +114,7 @@ class ForagerEnv:
             if conf.freq is None: continue
 
             for _ in range(int(size * conf.freq)):
-                coords = get_unpopulated(self._size, self._object_names, self.rng)
+                coords = get_unpopulated(self._state, self._size, self._object_names, self.rng)
                 self.add_object(coords, conf)
 
     def _init_object_store(self):
@@ -132,13 +132,13 @@ class ForagerEnv:
         self._init_object_store()
 
 @nbu.njit
-def get_unpopulated(size: Size, objs: Dict[Coords, Any], rng: np.random.Generator):
+def get_unpopulated(state: Coords, size: Size, objs: Dict[Coords, Any], rng: np.random.Generator):
     for _ in range(50):
         x = rng.integers(0, size[0])
         y = rng.integers(0, size[1])
 
         c = (x, y)
-        if c not in objs:
+        if c not in objs and c != state:
             return c
 
     raise Exception('Uh-oh! We could not find an open coordinate after 50 tries!')
