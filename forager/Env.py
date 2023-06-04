@@ -30,16 +30,26 @@ class ForagerEnv:
         self._size: Size = cu.to_tuple(self._c.size)
         self._ap_size: Size = cu.to_tuple(self._c.aperture)
 
-        _names = set([
-            obj.name for obj in self._c.objects
-        ])
-        _names |= {'border'}
-        self._names: List[str] = nbu.List(sorted(_names))
-
         # build object storage
         self._init_object_store()
         self._object_configs: Dict[Coords, ForagerObject] = {}
         self._to_respawn: Dict[int, List[ForagerObject]] = defaultdict(list)
+
+        # ensure object types have a consistent object dimension
+        _names = set(self._c.object_types.keys())
+        _names |= {'border'}
+
+        self._names = nbu.List(sorted(_names))
+        self._names_to_dims = nbu.Dict.empty(
+            key_type=nb.typeof(''),
+            value_type=nb.typeof(int(1)),
+            n_keys=len(_names),
+        )
+
+        for i, n in enumerate(self._names):
+            self._names_to_dims[n] = i
+
+        # build colors for objects
 
         # build state information
         self.rng = np.random.default_rng(seed)
@@ -48,9 +58,6 @@ class ForagerEnv:
             int(self._size[0] // 2),
             int(self._size[1] // 2),
         )
-
-        for obj in self._c.objects:
-            self.add_object(obj)
 
     def step(self, action: Action):
         n = grid.step(self._state, self._size, action)
@@ -66,32 +73,37 @@ class ForagerEnv:
             if obj.collectable:
                 self.remove_object(n, obj)
 
-        obs = get_vision_by_name(n, self._size, self._ap_size, self._object_names, self._names)
+        obs = get_vision_by_name(n, self._size, self._ap_size, self._coords_to_name, self._names)
         self._state = n
         self._clock += 1
         self._respawn()
 
         return (obs, r)
 
-    def add_object(self, obj: ForagerObject):
-        coords = obj.get_location(self._state, self._size, self._object_names, self.rng)
+    def add_object(self, obj: ForagerObject | str):
+        if isinstance(obj, str):
+            obj = self._c.object_types[obj]()
 
-        if coords in self._object_names:
-            prior = self._object_names[coords]
+        if obj.name not in self._names_to_dims:
+            raise Exception("Cannot add new object types after initialization")
+
+        coords = obj.get_location(self._state, self._size, self._coords_to_name, self.rng)
+
+        if coords in self._coords_to_name:
+            prior = self._coords_to_name[coords]
             logger.warn(f'Object already found at {coords}: {prior}. Replacing with {obj.name}')
 
-        self._object_names[coords] = obj.name
+        self._coords_to_name[coords] = obj.name
         self._object_configs[coords] = obj
 
-    def generate_objects(self, freq: float, factory: Callable[[], ForagerObject]):
+    def generate_objects(self, freq: float, name: str):
         size = self._size[0] * self._size[1]
         for _ in range(int(size * freq)):
-            obj = factory()
-            self.add_object(obj)
+            self.add_object(name)
 
     def remove_object(self, coords: Coords, obj: ForagerObject):
         del self._object_configs[coords]
-        del self._object_names[coords]
+        del self._coords_to_name[coords]
 
         delta = obj.regen_delay(self.rng, self._clock)
 
@@ -108,7 +120,7 @@ class ForagerEnv:
         del self._to_respawn[self._clock]
 
     def _init_object_store(self):
-        self._object_names = nbu.Dict.empty(
+        self._coords_to_name = nbu.Dict.empty(
             key_type=nb.types.UniTuple(nb.types.int64, 2),
             value_type=nb.typeof(''),
         )

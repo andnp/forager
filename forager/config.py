@@ -2,7 +2,7 @@ import json
 import forager._utils.config as cu
 
 from dataclasses import dataclass
-from typing import List
+from typing import Callable, Dict
 
 from forager.exceptions import ForagerInvalidConfigException
 from forager.interface import Size
@@ -12,7 +12,7 @@ from forager.objects import ForagerObject
 @dataclass
 class ForagerConfig:
     size: int | Size
-    objects: List[ForagerObject]
+    object_types: Dict[str, Callable[[], ForagerObject]]
 
     observation_mode: str = 'objects'
     aperture: int | Size = 3
