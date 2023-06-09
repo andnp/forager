@@ -68,7 +68,7 @@ class ForagerEnv:
         r = 0.
         if self._obj_store.has_object(idx):
             obj = self._obj_store.get_object(idx)
-            r = obj.reward(self.rng, self._clock)
+            r = obj.collision(self.rng, self._clock)
 
             if obj.blocking:
                 n = self._state

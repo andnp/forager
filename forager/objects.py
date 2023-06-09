@@ -12,8 +12,15 @@ class ForagerObject:
         self.location: Coords | None = None
         self.color: RawRGB | None = None
 
+        self.last_collision = 0
+
     def regen_delay(self, rng: np.random.Generator, clock: int) -> int | None:
         return rng.integers(10, 100)
+
+    def collision(self, rng: np.random.Generator, clock: int) -> float:
+        r = self.reward(rng, clock)
+        self.last_collision = clock
+        return r
 
     @abstractmethod
     def reward(self, rng: np.random.Generator, clock: int) -> float:
