@@ -49,23 +49,14 @@ def right(c: Coords, s: Coords) -> Coords:
         c[1],
     )
 
-_has_logged = False
-def sample_unpopulated(rng: np.random.Generator, size: Size, objs: Dict[Coords, Any], exclusions: Set[Coords] = set()):
-    global _has_logged
-
-    i = 0
-    c = None
-    for i in range(10):
-        x = rng.integers(0, size[0])
-        y = rng.integers(0, size[1])
-
-        c = (x, y)
-        if c not in objs and c not in exclusions:
+@nbu.njit
+def sample_unpopulated(rng: np.random.Generator, size: Size, objs: Dict[int, Any]):
+    c = (0, 0)
+    total = size[0] * size[1]
+    for _ in range(10):
+        idx = rng.integers(0, total)
+        c = nbu.unravel(idx, size)
+        if idx not in objs:
             return c
 
-    if i > 5 and not _has_logged:
-        _has_logged = True
-        logger.warn('Running into many collisions finding empty places for objects!')
-
-    assert c is not None, "Impossible code path"
     return c

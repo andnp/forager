@@ -2,17 +2,19 @@ import json
 import forager._utils.config as cu
 
 from dataclasses import dataclass
-from typing import List
+from typing import Callable, Dict
 
 from forager.exceptions import ForagerInvalidConfigException
 from forager.interface import Size
 from forager.logger import logger
 from forager.objects import ForagerObject
 
+ObjectFactory = Callable[[], ForagerObject]
+
 @dataclass
 class ForagerConfig:
     size: int | Size
-    objects: List[ForagerObject]
+    object_types: Dict[str, ObjectFactory]
 
     observation_mode: str = 'objects'
     aperture: int | Size = 3
@@ -46,7 +48,7 @@ def _maybe_fix_aperture(config: ForagerConfig) -> ForagerConfig:
         cu.nearest_odd(ap[1]),
     )
     if ap[0] % 2 == 0 or ap[1] % 2 == 0:
-        logger.warn(f'Aperture sizes must be odd. Resizing from {ap} to {new_ap}')
+        logger.warning(f'Aperture sizes must be odd. Resizing from {ap} to {new_ap}')
         config.aperture = new_ap
 
     return config

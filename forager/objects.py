@@ -1,10 +1,7 @@
 import numpy as np
-import forager.grid as grid
 
 from abc import abstractmethod
-from typing import Dict
-from forager.exceptions import ForagerInvalidConfigException
-from forager.interface import Coords, RawRGB, Size
+from forager.interface import Coords, RawRGB
 
 class ForagerObject:
     def __init__(self, name: str):
@@ -14,12 +11,6 @@ class ForagerObject:
         self.blocking: bool = False
         self.location: Coords | None = None
         self.color: RawRGB | None = None
-
-    def get_location(self, state: Coords, size: Size, objects: Dict[Coords, str], rng: np.random.Generator) -> Coords:
-        if self.location is not None:
-            return self.location
-
-        return grid.sample_unpopulated(rng, size, objects, exclusions={state})
 
     def regen_delay(self, rng: np.random.Generator, clock: int) -> int | None:
         return rng.integers(10, 100)
