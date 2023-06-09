@@ -224,7 +224,7 @@ def test_benchmark_big_env(benchmark):
             'wall': Wall,
             'flower': Flower,
         },
-        aperture=31,
+        aperture=61,
     )
 
     env = ForagerEnv(config)
