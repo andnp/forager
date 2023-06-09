@@ -4,13 +4,14 @@ import numba as nb
 import forager.grid as grid
 import forager._utils.numba as nbu
 
-from typing import Dict, Set
+from typing import Dict
+from forager.colors import Palette
 from forager.config import ForagerObject, ObjectFactory
-from forager.interface import Coords, Size
+from forager.interface import Size
 from forager.logger import logger
 
 class ObjectStorage:
-    def __init__(self, size: Size, obj_factories: Dict[str, ObjectFactory],  rng: np.random.Generator):
+    def __init__(self, size: Size, obj_factories: Dict[str, ObjectFactory], palette: Palette, rng: np.random.Generator):
         self.rng = rng
         self.size = size
         self.factories = obj_factories
@@ -19,8 +20,13 @@ class ObjectStorage:
             key_type=nb.types.int64,
             value_type=nb.typeof(''),
         )
+        self.name_to_color = nbu.Dict.empty(
+            key_type=nb.typeof(''),
+            value_type=nb.types.uint8[:],
+        )
 
         self._idx_to_config: Dict[int, ForagerObject] = {}
+        self._colors = palette
 
     def add_object(self, obj: ForagerObject):
         coords = obj.location
@@ -36,7 +42,17 @@ class ObjectStorage:
         self.idx_to_name[idx] = obj.name
         self._idx_to_config[idx] = obj
 
+        color = obj.color
+        if color is None:
+            color = self._colors.generate(obj.name)
+
+        self.name_to_color[obj.name] = color
+
     def add_deferred_object(self, name: str):
+        if name not in self.name_to_color:
+            obj = self.factories[name]()
+            return self.add_object(obj)
+
         coords = grid.sample_unpopulated(self.rng, self.size, self.idx_to_name)
         idx = nbu.ravel(coords, self.size)
 
@@ -47,7 +63,11 @@ class ObjectStorage:
         self.idx_to_name[idx] = name
 
     def add_n_deferred_objects(self, name: str, n: int):
-        collisions = _add_many(self.rng, self.size, name, n, self.idx_to_name)
+        # first add a single object "manually" so that caches can be built correctly
+        self.add_deferred_object(name)
+
+        # then add n-1 objects quickly without worrying about cache states
+        collisions = _add_many(self.rng, self.size, name, n - 1, self.idx_to_name)
 
         if collisions > 0:
             logger.warning(f'Encountered {collisions} collisions while generating objects of type: {name}')
@@ -77,7 +97,7 @@ class ObjectStorage:
         return len(self.idx_to_name)
 
 
-@nbu.njit
+@nbu.njit(nogil=False)
 def _add_many(rng, size: Size, name: str, n: int, store: Dict[int, str]):
     count = 0
     for _ in range(n):

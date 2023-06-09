@@ -10,14 +10,13 @@ from typing import Dict, List
 from forager.config import ForagerConfig, load_config, sanity_check
 from forager.exceptions import ForagerInvalidConfigException
 from forager.interface import Action, Coords, Size
-from forager.logger import logger
 from forager.objects import ForagerObject
 from forager.ObjectStorage import ObjectStorage
-from forager.observations import get_object_vision
+from forager.observations import get_object_vision, get_color_vision
 
 
 class ForagerEnv:
-    def __init__(self, config: ForagerConfig | None = None, *, config_path: str | None = None, seed: int | None = None):
+    def __init__(self, config: ForagerConfig | None = None, *, config_path: str | None = None):
         if config is None and config_path is None:
             raise ForagerInvalidConfigException('Expected either {config} or {config_path} to be specified')
 
@@ -26,15 +25,16 @@ class ForagerEnv:
             assert config_path is not None, 'Should be impossible.'
             config = load_config(config_path)
 
-        self.rng = np.random.default_rng(seed)
 
         # parse configuration
         self._c = sanity_check(config)
         self._size: Size = cu.to_tuple(self._c.size)
         self._ap_size: Size = cu.to_tuple(self._c.aperture)
+        self._colors = cu.not_none(self._c.colors)
+        self.rng = np.random.default_rng(self._c.seed)
 
         # build object storage
-        self._obj_store = ObjectStorage(self._size, self._c.object_types, self.rng)
+        self._obj_store = ObjectStorage(self._size, self._c.object_types, self._colors, self.rng)
         self._to_respawn: Dict[int, List[ForagerObject]] = defaultdict(list)
 
         # ensure object types have a consistent object dimension
@@ -58,6 +58,9 @@ class ForagerEnv:
             int(self._size[1] // 2),
         )
 
+    def start(self):
+        return self._get_observation(self._state)
+
     def step(self, action: Action):
         n = grid.step(self._state, self._size, action)
         idx = nbu.ravel(n, self._size)
@@ -73,7 +76,8 @@ class ForagerEnv:
             if obj.collectable:
                 self.remove_object(n)
 
-        obs = get_object_vision(n, self._size, self._ap_size, self._obj_store.idx_to_name, self._names_to_dims)
+        obs = self._get_observation(n)
+
         self._state = n
         self._clock += 1
         self._respawn()
@@ -104,6 +108,14 @@ class ForagerEnv:
             self._obj_store.add_object(obj)
 
         del self._to_respawn[self._clock]
+
+    def _get_observation(self, s: Coords):
+        if self._c.observation_mode == 'objects':
+            return get_object_vision(s, self._size, self._ap_size, self._obj_store.idx_to_name, self._names_to_dims)
+        elif self._c.observation_mode == 'colors':
+            return get_color_vision(s, self._size, self._ap_size, self._obj_store.idx_to_name, self._obj_store.name_to_color)
+        else:
+            raise Exception()
 
     def __getstate__(self):
         # TODO: this should return a minimum necessary state to restart the env

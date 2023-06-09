@@ -129,8 +129,9 @@ def test_respawn():
             'flower': Flower,
         },
         aperture=3,
+        seed=1,
     )
-    env = ForagerEnv(config, seed=1)
+    env = ForagerEnv(config)
     env.add_object(Flower((3, 4)))
     assert len(env._to_respawn) == 0
 
@@ -203,7 +204,7 @@ def test_benchmark_small_env(benchmark):
             'wall': Wall,
             'flower': Flower,
         },
-        aperture=31,
+        aperture=15,
     )
 
     env = ForagerEnv(config)
@@ -224,6 +225,27 @@ def test_benchmark_big_env(benchmark):
             'flower': Flower,
         },
         aperture=31,
+    )
+
+    env = ForagerEnv(config)
+    env.generate_objects(0.05, 'wall')
+    env.generate_objects(0.05, 'flower')
+
+    def _run(env):
+        for _ in range(100):
+            env.step(0)
+
+    benchmark(_run, env)
+
+def test_benchmark_small_env_color(benchmark):
+    config = ForagerConfig(
+        size=1_000,
+        object_types={
+            'wall': Wall,
+            'flower': Flower,
+        },
+        aperture=15,
+        observation_mode='colors',
     )
 
     env = ForagerEnv(config)

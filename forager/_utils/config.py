@@ -1,5 +1,5 @@
 import numpy as np
-from typing import Tuple
+from typing import Tuple, TypeVar
 
 def to_tuple(i: int | Tuple[int, int]):
     if isinstance(i, int):
@@ -18,3 +18,8 @@ def nearest_odd(i: int) -> int:
         return i + 1
 
     return i
+
+T = TypeVar('T')
+def not_none(t: T | None) -> T:
+    assert t is not None
+    return t

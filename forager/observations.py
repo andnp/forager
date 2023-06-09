@@ -6,7 +6,7 @@ from forager.interface import Coords, Size
 
 
 @nbu.njit
-def get_color_vision(state: Coords, size: Size, ap_size: Size, objs: Dict[Coords, np.ndarray]):
+def get_color_vision(state: Coords, size: Size, ap_size: Size, idx_to_name: Dict[int, str], name_to_color: Dict[str, np.ndarray]):
     out = np.zeros((ap_size[0], ap_size[1], 3), dtype=np.uint8)
 
     xs, ys = _bounds(state, size, ap_size)
@@ -20,8 +20,9 @@ def get_color_vision(state: Coords, size: Size, ap_size: Size, objs: Dict[Coords
 
             c = (x, y)
             idx = nbu.ravel(c, size)
-            if idx in objs:
-                color = objs[idx]
+            if idx in idx_to_name:
+                name = idx_to_name[idx]
+                color = name_to_color[name]
                 out[jr, i] = color
 
     return out

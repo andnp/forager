@@ -1,10 +1,9 @@
 import numpy as np
 import forager._utils.numba as nbu
 
-from typing import Any, Dict, Set
+from typing import Any, Dict
 from forager.exceptions import ForagerInvalidAction
 from forager.interface import Action, Coords, Size
-from forager.logger import logger
 
 @nbu.njit
 def step(state: Coords, size: Coords, action: Action) -> Coords:

@@ -4,6 +4,7 @@ import forager._utils.config as cu
 from dataclasses import dataclass
 from typing import Callable, Dict
 
+from forager.colors import Palette
 from forager.exceptions import ForagerInvalidConfigException
 from forager.interface import Size
 from forager.logger import logger
@@ -16,6 +17,8 @@ class ForagerConfig:
     size: int | Size
     object_types: Dict[str, ObjectFactory]
 
+    seed: int = 0
+    colors: Palette | None = None
     observation_mode: str = 'objects'
     aperture: int | Size = 3
 
@@ -32,6 +35,7 @@ def sanity_check(config: ForagerConfig) -> ForagerConfig:
 
     # Fixable issues
     config = _maybe_fix_aperture(config)
+    config = _default_palette(config)
 
     return config
 
@@ -50,5 +54,11 @@ def _maybe_fix_aperture(config: ForagerConfig) -> ForagerConfig:
     if ap[0] % 2 == 0 or ap[1] % 2 == 0:
         logger.warning(f'Aperture sizes must be odd. Resizing from {ap} to {new_ap}')
         config.aperture = new_ap
+
+    return config
+
+def _default_palette(config: ForagerConfig) -> ForagerConfig:
+    if config.colors is None:
+        config.colors = Palette(len(config.object_types), config.seed)
 
     return config
