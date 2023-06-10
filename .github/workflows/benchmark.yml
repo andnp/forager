@@ -21,7 +21,7 @@ jobs:
       - name: Run benchmark
         run: |
           pdm install
-          pytest --benchmark-json output.json
+          pdm run pytest --benchmark-json output.json
 
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
