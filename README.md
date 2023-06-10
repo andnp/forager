@@ -1,5 +1,7 @@
 # forager
 
+[Benchmarks](https://andnp.github.io/forager/dev/bench/)
+
 ## Getting started
 
 This environment approximately follows the RLGlue interface specification. One minor modification is that the `step` function does not emit a termination signal---this environment does not terminate!
