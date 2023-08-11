@@ -24,7 +24,7 @@ def step(state: Coords, size: Coords, action: Action) -> Coords:
 def up(c: Coords, s: Coords) -> Coords:
     return (
         c[0],
-        min(c[1] + 1, s[1]),
+        min(c[1] + 1, s[1] - 1),
     )
 
 @nbu.njit(inline='always')
@@ -44,7 +44,7 @@ def left(c: Coords, s: Coords) -> Coords:
 @nbu.njit(inline='always')
 def right(c: Coords, s: Coords) -> Coords:
     return (
-        min(c[0] + 1, s[0]),
+        min(c[0] + 1, s[0] - 1),
         c[1],
     )
 
