@@ -82,7 +82,7 @@ class ForagerEnv:
         self._clock += 1
         self._respawn()
 
-        return (obs, r)
+        return (obs, float(r))
 
     def add_object(self, obj: ForagerObject):
         self._obj_store.add_object(obj)
