@@ -9,11 +9,22 @@ from forager.interface import Coords, Size
 def get_color_vision(state: Coords, size: Size, ap_size: Size, idx_to_name: Dict[int, str], name_to_color: Dict[str, np.ndarray]):
     out = np.zeros((ap_size[0], ap_size[1], 3), dtype=np.uint8)
 
-    xs, ys = _bounds(state, size, ap_size)
+    ax = int(ap_size[0] // 2)
+    ay = int(ap_size[1] // 2)
+
+    xs = range(state[0] - ax, state[0] + ax + 1)
+    ys = range(state[1] - ay, state[1] + ay + 1)
+
     out[:, :] = 255
 
-    for i, x in enumerate(range(*xs)):
-        for j, y in enumerate(range(*ys)):
+    for i, x in enumerate(xs):
+        for j, y in enumerate(ys):
+
+            if x < 0 or x >= size[0]:
+                continue
+            if y < 0 or y >= size[1]:
+                continue
+
             # handle border vision
             jr = ap_size[1] - j - 1
             out[jr, i] = 0
@@ -32,12 +43,23 @@ def get_object_vision(state: Coords, size: Size, ap_size: Size, objs: Dict[Coord
     dims = len(names)
     out = np.zeros((ap_size[0], ap_size[1], dims), dtype=np.bool_)
 
-    xs, ys = _bounds(state, size, ap_size)
+    ax = int(ap_size[0] // 2)
+    ay = int(ap_size[1] // 2)
+
+    xs = range(state[0] - ax, state[0] + ax + 1)
+    ys = range(state[1] - ay, state[1] + ay + 1)
+
     b_dim = names['border']
     out[:, :, b_dim] = 1
 
-    for i, x in enumerate(range(*xs)):
-        for j, y in enumerate(range(*ys)):
+    for i, x in enumerate(xs):
+        for j, y in enumerate(ys):
+
+            if x < 0 or x >= size[0]:
+                continue
+            if y < 0 or y >= size[1]:
+                continue
+
             # handle border vision
             jr = ap_size[1] - j - 1
             out[jr, i, b_dim] = 0
@@ -50,20 +72,3 @@ def get_object_vision(state: Coords, size: Size, ap_size: Size, objs: Dict[Coord
                 out[jr, i, d] = 1
 
     return out
-
-
-@nbu.njit(inline='always')
-def _bounds(state: Coords, size: Size, ap_size: Size):
-    ax = int(ap_size[0] // 2)
-    ay = int(ap_size[1] // 2)
-
-    mi_x = max(state[0] - ax, 0)
-    ma_x = min(state[0] + ax + 1, size[0])
-
-    mi_y = max(state[1] - ay, 0)
-    ma_y = min(state[1] + ay + 1, size[1])
-
-    return (
-        (mi_x, ma_x),
-        (mi_y, ma_y),
-    )
