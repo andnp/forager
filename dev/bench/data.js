@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1686432615278,
+  "lastUpdate": 1692119207800,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -354,6 +354,65 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.000014281448822509581",
             "extra": "mean: 1.9582056000103876 msec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "panahiparham@gmail.com",
+            "name": "Parham",
+            "username": "panahiparham"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "1a7efab42f05f2f2360103cff3a40b45cdf035cb",
+          "message": "fix: ensure consistent reward type",
+          "timestamp": "2023-08-15T11:05:15-06:00",
+          "tree_id": "13d3fc22ea9f0b267f8229a6356abe7ceb40a5f7",
+          "url": "https://github.com/andnp/forager/commit/1a7efab42f05f2f2360103cff3a40b45cdf035cb"
+        },
+        "date": 1692119206575,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 79576.41427232865,
+            "unit": "iter/sec",
+            "range": "stddev: 6.766455473475851e-7",
+            "extra": "mean: 12.566537574535236 usec\nrounds: 10406"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 24.769388448107275,
+            "unit": "iter/sec",
+            "range": "stddev: 0.003288077229598754",
+            "extra": "mean: 40.37241380000296 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 426.48804665017445,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00003377102406766124",
+            "extra": "mean: 2.3447315999931106 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 38.27310404900684,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00004013041309099164",
+            "extra": "mean: 26.12800881578742 msec\nrounds: 38"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 412.9997451803097,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000006913855702021015",
+            "extra": "mean: 2.4213089999932436 msec\nrounds: 5"
           }
         ]
       }
