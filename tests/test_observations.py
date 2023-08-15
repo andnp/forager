@@ -2,7 +2,8 @@ import numpy as np
 import numba as nb
 import forager._utils.numba as nbu
 
-from forager.observations import get_color_vision
+from forager.observations import get_color_vision, get_object_vision
+
 
 def test_color_vision():
     state = (5, 5)
@@ -38,3 +39,39 @@ def test_color_vision():
     ], dtype=np.uint8)
 
     assert np.allclose(got, expected)
+
+
+def test_object_borders():
+    size = (10, 10)
+    ap_size = (3, 3)
+
+    idx_to_name = nbu.Dict.empty(
+        key_type=nb.types.int64,
+        value_type=nb.typeof(''),
+    )
+
+    name_to_dim = nbu.Dict.empty(
+        key_type=nb.typeof(''),
+        value_type=nb.typeof(int(1)),
+    )
+
+    name_to_dim['border'] = 0
+
+    got = get_object_vision((5, 5), size, ap_size, idx_to_name, name_to_dim)
+    assert got.shape[2] == 1
+
+    border = got[:, :, 0]
+    assert np.all(border == np.zeros((3, 3), dtype=np.bool_))
+
+    got = get_object_vision((1, 1), size, ap_size, idx_to_name, name_to_dim)
+    border = got[:, :, 0]
+    assert np.all(border == np.zeros((3, 3), dtype=np.bool_))
+
+    got = get_object_vision((0, 1), size, ap_size, idx_to_name, name_to_dim)
+    border = got[:, :, 0]
+    expected = np.array([
+        [1, 0, 0],
+        [1, 0, 0],
+        [1, 0, 0],
+    ], dtype=np.bool_)
+    assert np.all(border == expected)
