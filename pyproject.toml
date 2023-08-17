@@ -1,5 +1,5 @@
 [project]
-name = "forager"
+name = "ForagerEnv"
 version = "0.0.0"
 description = ""
 authors = [
