@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1692119209513,
+  "lastUpdate": 1692297701838,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -472,6 +472,65 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.000006913855702021015",
             "extra": "mean: 2.4213089999932436 msec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andnpatterson@gmail.com",
+            "name": "andy",
+            "username": "andnp"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "andy",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "c8a4a07900a399e1225fcef0a9950b172f6faea8",
+          "message": "ci: update build",
+          "timestamp": "2023-08-17T12:40:19-06:00",
+          "tree_id": "0535039d53035583a8cd40da90239d3279cfd754",
+          "url": "https://github.com/andnp/forager/commit/c8a4a07900a399e1225fcef0a9950b172f6faea8"
+        },
+        "date": 1692297701102,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 77871.36332105506,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0000027294824751820227",
+            "extra": "mean: 12.841691185976929 usec\nrounds: 10835"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 29.79916702388274,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0029844822175260043",
+            "extra": "mean: 33.55798500000162 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 422.3156666016926,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000010397136644370126",
+            "extra": "mean: 2.367897000002017 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 38.284660231295824,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00012100743066528772",
+            "extra": "mean: 26.12012210526422 msec\nrounds: 38"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 415.63492224494263,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000015024706994120601",
+            "extra": "mean: 2.4059575999984872 msec\nrounds: 5"
           }
         ]
       }
