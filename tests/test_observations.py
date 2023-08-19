@@ -41,6 +41,48 @@ def test_color_vision():
     assert np.allclose(got, expected)
 
 
+def test_object_vision():
+    size = (10, 10)
+    ap_size = (3, 3)
+
+    idx_to_name = nbu.Dict.empty(
+        key_type=nb.types.int64,
+        value_type=nb.typeof(''),
+    )
+
+    name_to_dim = nbu.Dict.empty(
+        key_type=nb.typeof(''),
+        value_type=nb.typeof(int(1)),
+    )
+
+    name_to_dim['border'] = 0
+    name_to_dim['a'] = 1
+    name_to_dim['b'] = 2
+
+    # check middle
+    idx_to_name[nbu.ravel((4, 4), size)] = 'a'
+    idx_to_name[nbu.ravel((3, 4), size)] = 'a'
+    idx_to_name[nbu.ravel((5, 5), size)] = 'a'
+    idx_to_name[nbu.ravel((6, 5), size)] = 'b'
+    got = get_object_vision((5, 5), size, ap_size, idx_to_name, name_to_dim)
+    assert got.shape[2] == 3
+
+    expected_a = np.array([
+        [0, 0, 0],
+        [0, 1, 0],
+        [1, 0, 0],
+    ])
+
+    expected_b = np.array([
+        [0, 0, 0],
+        [0, 0, 1],
+        [0, 0, 0],
+    ])
+
+    assert np.allclose(got[:, :, 1], expected_a)
+    assert np.allclose(got[:, :, 2], expected_b)
+
+
 def test_object_borders():
     size = (10, 10)
     ap_size = (3, 3)
@@ -57,20 +99,63 @@ def test_object_borders():
 
     name_to_dim['border'] = 0
 
+    # check middle
     got = get_object_vision((5, 5), size, ap_size, idx_to_name, name_to_dim)
     assert got.shape[2] == 1
 
     border = got[:, :, 0]
     assert np.all(border == np.zeros((3, 3), dtype=np.bool_))
 
+    # check near border
     got = get_object_vision((1, 1), size, ap_size, idx_to_name, name_to_dim)
     border = got[:, :, 0]
     assert np.all(border == np.zeros((3, 3), dtype=np.bool_))
 
+    # check left wall
     got = get_object_vision((0, 1), size, ap_size, idx_to_name, name_to_dim)
     border = got[:, :, 0]
     expected = np.array([
         [1, 0, 0],
+        [1, 0, 0],
+        [1, 0, 0],
+    ], dtype=np.bool_)
+    assert np.all(border == expected)
+
+    # check bottom left corner
+    got = get_object_vision((0, 0), size, ap_size, idx_to_name, name_to_dim)
+    border = got[:, :, 0]
+    expected = np.array([
+        [1, 0, 0],
+        [1, 0, 0],
+        [1, 1, 1],
+    ], dtype=np.bool_)
+    assert np.all(border == expected)
+
+    # check bottom right corner
+    got = get_object_vision((9, 0), size, ap_size, idx_to_name, name_to_dim)
+    border = got[:, :, 0]
+    expected = np.array([
+        [0, 0, 1],
+        [0, 0, 1],
+        [1, 1, 1],
+    ], dtype=np.bool_)
+    assert np.all(border == expected)
+
+    # check top right corner
+    got = get_object_vision((9, 9), size, ap_size, idx_to_name, name_to_dim)
+    border = got[:, :, 0]
+    expected = np.array([
+        [1, 1, 1],
+        [0, 0, 1],
+        [0, 0, 1],
+    ], dtype=np.bool_)
+    assert np.all(border == expected)
+
+    # check top left corner
+    got = get_object_vision((0, 9), size, ap_size, idx_to_name, name_to_dim)
+    border = got[:, :, 0]
+    expected = np.array([
+        [1, 1, 1],
         [1, 0, 0],
         [1, 0, 0],
     ], dtype=np.bool_)

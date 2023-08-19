@@ -6,7 +6,13 @@ from forager.interface import Coords, Size
 
 
 @nbu.njit
-def get_color_vision(state: Coords, size: Size, ap_size: Size, idx_to_name: Dict[int, str], name_to_color: Dict[str, np.ndarray]):
+def get_color_vision(
+    state: Coords,
+    size: Size,
+    ap_size: Size,
+    idx_to_name: Dict[int, str],
+    name_to_color: Dict[str, np.ndarray]
+) -> np.ndarray:
     out = np.zeros((ap_size[0], ap_size[1], 3), dtype=np.uint8)
 
     ax = int(ap_size[0] // 2)
@@ -38,8 +44,15 @@ def get_color_vision(state: Coords, size: Size, ap_size: Size, idx_to_name: Dict
 
     return out
 
+
 @nbu.njit
-def get_object_vision(state: Coords, size: Size, ap_size: Size, objs: Dict[Coords, str], names: Dict[str, int]):
+def get_object_vision(
+    state: Coords,
+    size: Size,
+    ap_size: Size,
+    objs: Dict[Coords, str],
+    names: Dict[str, int],
+) -> np.ndarray:
     dims = len(names)
     out = np.zeros((ap_size[0], ap_size[1], dims), dtype=np.bool_)
 
