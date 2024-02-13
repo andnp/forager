@@ -55,9 +55,8 @@ def test_object_vision():
         value_type=nb.typeof(int(1)),
     )
 
-    name_to_dim['border'] = 0
-    name_to_dim['a'] = 1
-    name_to_dim['b'] = 2
+    name_to_dim['a'] = 0
+    name_to_dim['b'] = 1
 
     # check middle
     idx_to_name[nbu.ravel((4, 4), size)] = 'a'
@@ -65,7 +64,7 @@ def test_object_vision():
     idx_to_name[nbu.ravel((5, 5), size)] = 'a'
     idx_to_name[nbu.ravel((6, 5), size)] = 'b'
     got = get_object_vision((5, 5), size, ap_size, idx_to_name, name_to_dim)
-    assert got.shape[2] == 3
+    assert got.shape[2] == 2
 
     expected_a = np.array([
         [0, 0, 0],
@@ -79,12 +78,12 @@ def test_object_vision():
         [0, 0, 0],
     ])
 
-    assert np.allclose(got[:, :, 1], expected_a)
-    assert np.allclose(got[:, :, 2], expected_b)
+    assert np.allclose(got[:, :, 0], expected_a)
+    assert np.allclose(got[:, :, 1], expected_b)
 
 
-def test_object_borders():
-    size = (10, 10)
+def test_object_vision_wrap():
+    size = (5, 5)
     ap_size = (3, 3)
 
     idx_to_name = nbu.Dict.empty(
@@ -97,66 +96,31 @@ def test_object_borders():
         value_type=nb.typeof(int(1)),
     )
 
-    name_to_dim['border'] = 0
+    name_to_dim['a'] = 0
+    name_to_dim['b'] = 1
 
-    # check middle
-    got = get_object_vision((5, 5), size, ap_size, idx_to_name, name_to_dim)
-    assert got.shape[2] == 1
 
-    border = got[:, :, 0]
-    assert np.all(border == np.zeros((3, 3), dtype=np.bool_))
+    idx_to_name[nbu.ravel((3, 0), size)] = 'a'
+    idx_to_name[nbu.ravel((0, 3), size)] = 'b'
+    got = get_object_vision((3, 4), size, ap_size, idx_to_name, name_to_dim)
+    assert got.shape[2] == 2
 
-    # check near border
-    got = get_object_vision((1, 1), size, ap_size, idx_to_name, name_to_dim)
-    border = got[:, :, 0]
-    assert np.all(border == np.zeros((3, 3), dtype=np.bool_))
+    expected_a = np.array([
+        [0, 1, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+    ])
 
-    # check left wall
-    got = get_object_vision((0, 1), size, ap_size, idx_to_name, name_to_dim)
-    border = got[:, :, 0]
-    expected = np.array([
-        [1, 0, 0],
-        [1, 0, 0],
-        [1, 0, 0],
-    ], dtype=np.bool_)
-    assert np.all(border == expected)
+    assert np.allclose(got[:, :, 0], expected_a)
 
-    # check bottom left corner
-    got = get_object_vision((0, 0), size, ap_size, idx_to_name, name_to_dim)
-    border = got[:, :, 0]
-    expected = np.array([
-        [1, 0, 0],
-        [1, 0, 0],
-        [1, 1, 1],
-    ], dtype=np.bool_)
-    assert np.all(border == expected)
 
-    # check bottom right corner
-    got = get_object_vision((9, 0), size, ap_size, idx_to_name, name_to_dim)
-    border = got[:, :, 0]
-    expected = np.array([
+    got = get_object_vision((4, 3), size, ap_size, idx_to_name, name_to_dim)
+    assert got.shape[2] == 2
+
+    expected_b = np.array([
+        [0, 0, 0],
         [0, 0, 1],
-        [0, 0, 1],
-        [1, 1, 1],
-    ], dtype=np.bool_)
-    assert np.all(border == expected)
+        [0, 0, 0],
+    ])
 
-    # check top right corner
-    got = get_object_vision((9, 9), size, ap_size, idx_to_name, name_to_dim)
-    border = got[:, :, 0]
-    expected = np.array([
-        [1, 1, 1],
-        [0, 0, 1],
-        [0, 0, 1],
-    ], dtype=np.bool_)
-    assert np.all(border == expected)
-
-    # check top left corner
-    got = get_object_vision((0, 9), size, ap_size, idx_to_name, name_to_dim)
-    border = got[:, :, 0]
-    expected = np.array([
-        [1, 1, 1],
-        [1, 0, 0],
-        [1, 0, 0],
-    ], dtype=np.bool_)
-    assert np.all(border == expected)
+    assert np.allclose(got[:, :, 1], expected_b)

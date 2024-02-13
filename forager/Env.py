@@ -39,7 +39,6 @@ class ForagerEnv:
 
         # ensure object types have a consistent object dimension
         _names = set(self._c.object_types.keys())
-        _names |= {'border'}
 
         self._names = nbu.List(sorted(_names))
         self._names_to_dims = nbu.Dict.empty(

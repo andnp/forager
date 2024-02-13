@@ -21,25 +21,19 @@ def get_color_vision(
     xs = range(state[0] - ax, state[0] + ax + 1)
     ys = range(state[1] - ay, state[1] + ay + 1)
 
-    out[:, :] = 255
 
     for i, x in enumerate(xs):
         for j, y in enumerate(ys):
 
-            if x < 0 or x >= size[0]:
-                continue
-            if y < 0 or y >= size[1]:
-                continue
-
-            # handle border vision
-            jr = ap_size[1] - j - 1
-            out[jr, i] = 0
+            x = x % size[0]
+            y = y % size[1]
 
             c = (x, y)
             idx = nbu.ravel(c, size)
             if idx in idx_to_name:
                 name = idx_to_name[idx]
                 color = name_to_color[name]
+                jr = ap_size[1] - j - 1
                 out[jr, i] = color
 
     return out
@@ -62,26 +56,18 @@ def get_object_vision(
     xs = range(state[0] - ax, state[0] + ax + 1)
     ys = range(state[1] - ay, state[1] + ay + 1)
 
-    b_dim = names['border']
-    out[:, :, b_dim] = 1
-
     for i, x in enumerate(xs):
         for j, y in enumerate(ys):
 
-            if x < 0 or x >= size[0]:
-                continue
-            if y < 0 or y >= size[1]:
-                continue
-
-            # handle border vision
-            jr = ap_size[1] - j - 1
-            out[jr, i, b_dim] = 0
+            x = x % size[0]
+            y = y % size[1]
 
             c = (x, y)
             idx = nbu.ravel(c, size)
             if idx in objs:
                 obj = objs[idx]
                 d = names[obj]
+                jr = ap_size[1] - j - 1
                 out[jr, i, d] = 1
 
     return out

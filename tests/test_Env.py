@@ -98,7 +98,7 @@ def test_vision():
     ], dtype=np.bool_)
 
     assert env._state == (3, 3)
-    assert np.allclose(x[:, :, 1], expected)
+    assert np.allclose(x[:, :, 0], expected)
 
     env.step(1)
     x, _ = env.step(0)
@@ -109,18 +109,7 @@ def test_vision():
     ], dtype=np.bool_)
 
     assert env._state == (4, 4)
-    assert np.allclose(x[:, :, 1], expected)
-
-    env.step(1) # (5, 4)
-    x, _ = env.step(1) # (6, 4)
-    expected_0 = np.array([
-        [0, 0, 1],
-        [0, 0, 1],
-        [0, 0, 1],
-    ], dtype=np.bool_)
-
-    assert env._state == (6, 4)
-    assert np.allclose(x[:, :, 0], expected_0)
+    assert np.allclose(x[:, :, 0], expected)
 
 def test_respawn():
     config = ForagerConfig(
@@ -152,6 +141,124 @@ def test_respawn():
     assert len(env._obj_store) == 1
     assert len(env._to_respawn) == 0
 
+def test_wrapping_dynamics():
+    config = ForagerConfig(
+        size=5,
+        object_types={
+        },
+        aperture=3,
+        seed=1
+    )
+    env = ForagerEnv(config)
+
+    # go up
+    _ = env.start()
+    assert env._state == (2, 2)
+    _ = env.step(0)
+    assert env._state == (2, 3)
+    _ = env.step(0)
+    assert env._state == (2, 4)
+    _ = env.step(0)
+    assert env._state == (2, 0)
+    _ = env.step(0)
+    assert env._state == (2, 1)
+    _ = env.step(0)
+    assert env._state == (2, 2)
+    
+    # go down
+    _ = env.start()
+    assert env._state == (2, 2)
+    _ = env.step(2)
+    assert env._state == (2, 1)
+    _ = env.step(2)
+    assert env._state == (2, 0)
+    _ = env.step(2)
+    assert env._state == (2, 4)
+    _ = env.step(2)
+    assert env._state == (2, 3)
+    _ = env.step(2)
+    assert env._state == (2, 2)
+
+    # go right
+    _ = env.start()
+    assert env._state == (2, 2)
+    _ = env.step(1)
+    assert env._state == (3, 2)
+    _ = env.step(1)
+    assert env._state == (4, 2)
+    _ = env.step(1)
+    assert env._state == (0, 2)
+    _ = env.step(1)
+    assert env._state == (1, 2)
+    _ = env.step(1)
+    assert env._state == (2, 2)
+
+    # go left
+    _ = env.start()
+    assert env._state == (2, 2)
+    _ = env.step(3)
+    assert env._state == (1, 2)
+    _ = env.step(3)
+    assert env._state == (0, 2)
+    _ = env.step(3)
+    assert env._state == (4, 2)
+    _ = env.step(3)
+    assert env._state == (3, 2)
+    _ = env.step(3)
+    assert env._state == (2, 2)
+
+def test_wrapping_vision():
+    config = ForagerConfig(
+        size=5,
+        object_types={
+            'flower': Flower,
+        },
+        aperture=3,
+        seed=1
+    )
+    env = ForagerEnv(config)
+    env.add_object(Flower((0, 0)))
+
+    expected = np.array([
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 0],
+    ], dtype=np.bool_)
+
+    x = env.start()
+
+    assert env._state == (2, 2)
+    assert np.allclose(x[:, :, 0], expected)
+
+    # go left
+    _ = env.step(3)
+    # go down
+    x, _ = env.step(2)
+
+    expected = np.array([
+        [0, 0, 0],
+        [0, 0, 0],
+        [1, 0, 0],
+    ], dtype=np.bool_)
+
+    assert env._state == (1, 1)
+    assert np.allclose(x[:, :, 0], expected)
+
+
+    # go left , go left
+    _ = env.step(3)
+    x, _ = env.step(3)
+    expected = np.array([
+        [0, 0, 0],
+        [0, 0, 0],
+        [0, 0, 1],
+    ], dtype=np.bool_)
+
+    assert env._state == (4, 1)
+    assert np.allclose(x[:, :, 0], expected)
+
+
+
 # ----------------------------
 # -- Performance benchmarks --
 # ----------------------------
@@ -178,7 +285,7 @@ def test_benchmark_vision(benchmark):
     ], dtype=np.bool_)
 
     assert env._state == (3, 3)
-    assert np.allclose(x[:, :, 1], expected)
+    assert np.allclose(x[:, :, 0], expected)
 
 def test_benchmark_creation(benchmark):
     config = ForagerConfig(
