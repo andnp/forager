@@ -25,7 +25,6 @@ class ForagerEnv:
             assert config_path is not None, 'Should be impossible.'
             config = load_config(config_path)
 
-
         # parse configuration
         self._c = sanity_check(config)
         self._size: Size = cu.to_tuple(self._c.size)
