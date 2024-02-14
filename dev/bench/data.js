@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1707861168198,
+  "lastUpdate": 1707933370478,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -767,6 +767,65 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.000024667855344176654",
             "extra": "mean: 1.2402435999973704 msec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "panahiparham@gmail.com",
+            "name": "Parham",
+            "username": "panahiparham"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "da41ec357f6837615456aa468c91f147e5ff5078",
+          "message": "feat: change to wrapped world\n\nFixes: #8",
+          "timestamp": "2024-02-14T10:55:14-07:00",
+          "tree_id": "9a9dc068f084813c2b052df2714071ea5bfe1c82",
+          "url": "https://github.com/andnp/forager/commit/da41ec357f6837615456aa468c91f147e5ff5078"
+        },
+        "date": 1707933369951,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 133483.98270927224,
+            "unit": "iter/sec",
+            "range": "stddev: 5.272024313802595e-7",
+            "extra": "mean: 7.491535536349685 usec\nrounds: 14858"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 59.728148764417426,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0008584668042277445",
+            "extra": "mean: 16.742524599987973 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 819.7533225674152,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00002055103910546729",
+            "extra": "mean: 1.2198791666596283 msec\nrounds: 6"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 65.35143873293029,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000151581753356855",
+            "extra": "mean: 15.301881938463042 msec\nrounds: 65"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 777.3188314691022,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00001663085050200324",
+            "extra": "mean: 1.2864733999947475 msec\nrounds: 5"
           }
         ]
       }
