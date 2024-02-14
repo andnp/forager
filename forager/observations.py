@@ -78,7 +78,7 @@ def get_world_vision(
     objs: Dict[Coords, str],
     names: Dict[str, int],
 ) -> np.ndarray:
-    dims = len(names) + 1
+    dims = len(names)
     out = np.zeros((size[0], size[1], dims), dtype=np.bool_)
 
     for i, x in enumerate(range(size[0])):
