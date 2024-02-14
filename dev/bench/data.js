@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1707933370478,
+  "lastUpdate": 1707934351427,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -826,6 +826,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.00001663085050200324",
             "extra": "mean: 1.2864733999947475 msec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "866d9fa02943883a2e726b536f1f8b7ac7610b29",
+          "message": "ci: add flake8 blocker in test script",
+          "timestamp": "2024-02-14T11:10:49-07:00",
+          "tree_id": "f9452a96d236c888604929ca512b2cd9a4586942",
+          "url": "https://github.com/andnp/forager/commit/866d9fa02943883a2e726b536f1f8b7ac7610b29"
+        },
+        "date": 1707934350901,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 134803.92805544933,
+            "unit": "iter/sec",
+            "range": "stddev: 5.583918082355151e-7",
+            "extra": "mean: 7.41818146121578 usec\nrounds: 14262"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 52.99086313521776,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0013367619304307412",
+            "extra": "mean: 18.871177799996985 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 817.6525739690878,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000008156986129425465",
+            "extra": "mean: 1.2230133333351507 msec\nrounds: 6"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 64.04958770319838,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0002773578096410628",
+            "extra": "mean: 15.612902999999545 msec\nrounds: 63"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 780.5476290974449,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000012630842459464838",
+            "extra": "mean: 1.2811517999949729 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.2619536030842025,
+            "unit": "iter/sec",
+            "range": "stddev: 0.17083958762777093",
+            "extra": "mean: 3.817469919200002 sec\nrounds: 5"
           }
         ]
       }
