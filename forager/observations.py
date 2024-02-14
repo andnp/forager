@@ -71,3 +71,27 @@ def get_object_vision(
                 out[jr, i, d] = 1
 
     return out
+
+@nbu.njit
+def get_world_vision(
+    state: Coords,
+    size: Size,
+    objs: Dict[Coords, str],
+    names: Dict[str, int],
+) -> np.ndarray:
+    dims = len(names) + 1
+    out = np.zeros((size[0], size[1], dims), dtype=np.bool_)
+    
+    for i, x in enumerate(range(size[0])):
+        for j, y in enumerate(range(size[1])):
+            c = (x, y)
+            idx = nbu.ravel(c, size)
+            if idx in objs:
+                obj = objs[idx]
+                d = names[obj]
+                out[j, i, d] = 1
+    
+    # agent_dim
+    b_dim = names['agent']
+    out[state[1], state[0], b_dim] = 1
+    return out

@@ -12,7 +12,7 @@ from forager.exceptions import ForagerInvalidConfigException
 from forager.interface import Action, Coords, Size
 from forager.objects import ForagerObject
 from forager.ObjectStorage import ObjectStorage
-from forager.observations import get_object_vision, get_color_vision
+from forager.observations import get_object_vision, get_color_vision, get_world_vision
 
 
 class ForagerEnv:
@@ -38,6 +38,9 @@ class ForagerEnv:
 
         # ensure object types have a consistent object dimension
         _names = set(self._c.object_types.keys())
+
+        if config.observation_mode == 'world':
+            _names |= {'agent'}
 
         self._names = nbu.List(sorted(_names))
         self._names_to_dims = nbu.Dict.empty(
@@ -112,6 +115,8 @@ class ForagerEnv:
             return get_object_vision(s, self._size, self._ap_size, self._obj_store.idx_to_name, self._names_to_dims)
         elif self._c.observation_mode == 'colors':
             return get_color_vision(s, self._size, self._ap_size, self._obj_store.idx_to_name, self._obj_store.name_to_color)
+        elif self._c.observation_mode == 'world':
+            return get_world_vision(s, self._size, self._obj_store.idx_to_name, self._names_to_dims)
         else:
             raise Exception()
 
