@@ -1,7 +1,7 @@
 import numpy as np
 from typing import Tuple, TypeVar
 
-def to_tuple(i: int | Tuple[int, int]):
+def to_tuple(i: int | Tuple[int, int]) -> Tuple[int, int]:
     if isinstance(i, int):
         return (i, i)
     return i
