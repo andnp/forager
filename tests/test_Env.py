@@ -48,6 +48,16 @@ def test_init():
 
     assert len(env._obj_store) == int(100 * 0.1)
 
+    # world observation mode, apeture should be None
+    config = ForagerConfig(
+        size=10,
+        object_types={},
+        observation_mode='world'
+    )
+    env = ForagerEnv(config)
+
+    assert env._ap_size is None
+
 def test_basic_movement():
     config = ForagerConfig(
         size=7,
@@ -369,7 +379,6 @@ def test_benchmark_small_env_world(benchmark):
             'wall': Wall,
             'flower': Flower,
         },
-        aperture=15,
         observation_mode='world',
     )
 

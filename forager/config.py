@@ -20,7 +20,7 @@ class ForagerConfig:
     seed: int = 0
     colors: Palette | None = None
     observation_mode: str = 'objects'
-    aperture: int | Size = 3
+    aperture: int | Size | None = 3
 
 def load_config(path: str) -> ForagerConfig:
     with open(path, 'r') as f:
@@ -45,15 +45,21 @@ def _assert_valid_observation_mode(config: ForagerConfig) -> None:
         raise ForagerInvalidConfigException(f'Observation mode must be one of {valid_modes}')
 
 def _maybe_fix_aperture(config: ForagerConfig) -> ForagerConfig:
-    ap = cu.to_tuple(config.aperture)
+    if config.observation_mode == 'world' and config.aperture is not None:
+        logger.warning('As the obseravtion mode is WORLD, the aperture size is set to None.')
+        config.aperture = None
+        return config
 
-    new_ap = (
-        cu.nearest_odd(ap[0]),
-        cu.nearest_odd(ap[1]),
-    )
-    if ap[0] % 2 == 0 or ap[1] % 2 == 0:
-        logger.warning(f'Aperture sizes must be odd. Resizing from {ap} to {new_ap}')
-        config.aperture = new_ap
+    if config.aperture is not None:
+        ap = cu.to_tuple(config.aperture)
+
+        new_ap = (
+            cu.nearest_odd(ap[0]),
+            cu.nearest_odd(ap[1]),
+        )
+        if ap[0] % 2 == 0 or ap[1] % 2 == 0:
+            logger.warning(f'Aperture sizes must be odd. Resizing from {ap} to {new_ap}')
+            config.aperture = new_ap
 
     return config
 

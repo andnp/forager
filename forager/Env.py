@@ -28,7 +28,8 @@ class ForagerEnv:
         # parse configuration
         self._c = sanity_check(config)
         self._size: Size = cu.to_tuple(self._c.size)
-        self._ap_size: Size = cu.to_tuple(self._c.aperture)
+        self._ap_size = cu.to_tuple(config.aperture) if config.aperture is not None else None
+
         self._colors = cu.not_none(self._c.colors)
         self.rng = np.random.default_rng(self._c.seed)
 
@@ -112,8 +113,10 @@ class ForagerEnv:
 
     def _get_observation(self, s: Coords):
         if self._c.observation_mode == 'objects':
+            assert self._ap_size is not None, "Expected non-none aperture size when observation mode is 'objects'"
             return get_object_vision(s, self._size, self._ap_size, self._obj_store.idx_to_name, self._names_to_dims)
         elif self._c.observation_mode == 'colors':
+            assert self._ap_size is not None, "Expected non-none aperture size when observation mode is 'colors'"
             return get_color_vision(s, self._size, self._ap_size, self._obj_store.idx_to_name, self._obj_store.name_to_color)
         elif self._c.observation_mode == 'world':
             return get_world_vision(s, self._size, self._obj_store.idx_to_name, self._names_to_dims)
