@@ -7,7 +7,7 @@ from forager.objects import Flower, Wall
 def test_pickleable():
     env = ForagerEnv(config=ForagerConfig(size=1, object_types={}))
     data = pickle.dumps(env)
-    env2 = pickle.loads(data)
+    env2 = pickle.loads(data) # noqa
     # TODO: add equality check once api settles
     # for now, this test still ensures that things _can_ be pickled, which with numba is important
 
@@ -19,7 +19,6 @@ def test_init():
         aperture=3,
     )
     env = ForagerEnv(config)
-
 
     assert env._state == (4, 4)
     assert env._size == (8, 8)
@@ -164,7 +163,7 @@ def test_wrapping_dynamics():
     assert env._state == (2, 1)
     _ = env.step(0)
     assert env._state == (2, 2)
-    
+
     # go down
     _ = env.start()
     assert env._state == (2, 2)
@@ -244,7 +243,6 @@ def test_wrapping_vision():
     assert env._state == (1, 1)
     assert np.allclose(x[:, :, 0], expected)
 
-
     # go left , go left
     _ = env.step(3)
     x, _ = env.step(3)
@@ -256,7 +254,6 @@ def test_wrapping_vision():
 
     assert env._state == (4, 1)
     assert np.allclose(x[:, :, 0], expected)
-
 
 
 # ----------------------------
@@ -364,7 +361,7 @@ def test_benchmark_small_env_color(benchmark):
             env.step(0)
 
     benchmark(_run, env)
-        
+
 def test_benchmark_small_env_world(benchmark):
     config = ForagerConfig(
         size=1_000,
