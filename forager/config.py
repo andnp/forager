@@ -40,7 +40,7 @@ def sanity_check(config: ForagerConfig) -> ForagerConfig:
     return config
 
 def _assert_valid_observation_mode(config: ForagerConfig) -> None:
-    valid_modes = ['objects', 'colors']
+    valid_modes = ['objects', 'colors', 'world']
     if config.observation_mode not in valid_modes:
         raise ForagerInvalidConfigException(f'Observation mode must be one of {valid_modes}')
 

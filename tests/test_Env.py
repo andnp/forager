@@ -364,3 +364,24 @@ def test_benchmark_small_env_color(benchmark):
             env.step(0)
 
     benchmark(_run, env)
+        
+def test_benchmark_small_env_world(benchmark):
+    config = ForagerConfig(
+        size=1_000,
+        object_types={
+            'wall': Wall,
+            'flower': Flower,
+        },
+        aperture=15,
+        observation_mode='world',
+    )
+
+    env = ForagerEnv(config)
+    env.generate_objects(0.05, 'wall')
+    env.generate_objects(0.05, 'flower')
+
+    def _run(env):
+        for _ in range(100):
+            env.step(0)
+
+    benchmark(_run, env)
