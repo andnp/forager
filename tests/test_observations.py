@@ -98,7 +98,6 @@ def test_object_vision_wrap():
     name_to_dim['a'] = 0
     name_to_dim['b'] = 1
 
-
     idx_to_name[nbu.ravel((3, 0), size)] = 'a'
     idx_to_name[nbu.ravel((0, 3), size)] = 'b'
     got = get_object_vision((3, 4), size, ap_size, idx_to_name, name_to_dim)
@@ -111,7 +110,6 @@ def test_object_vision_wrap():
     ])
 
     assert np.allclose(got[:, :, 0], expected_a)
-
 
     got = get_object_vision((4, 3), size, ap_size, idx_to_name, name_to_dim)
     assert got.shape[2] == 2

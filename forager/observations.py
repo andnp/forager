@@ -21,7 +21,6 @@ def get_color_vision(
     xs = range(state[0] - ax, state[0] + ax + 1)
     ys = range(state[1] - ay, state[1] + ay + 1)
 
-
     for i, x in enumerate(xs):
         for j, y in enumerate(ys):
 
@@ -81,7 +80,7 @@ def get_world_vision(
 ) -> np.ndarray:
     dims = len(names) + 1
     out = np.zeros((size[0], size[1], dims), dtype=np.bool_)
-    
+
     for i, x in enumerate(range(size[0])):
         for j, y in enumerate(range(size[1])):
             c = (x, y)
@@ -90,7 +89,7 @@ def get_world_vision(
                 obj = objs[idx]
                 d = names[obj]
                 out[j, i, d] = 1
-    
+
     # agent_dim
     b_dim = names['agent']
     out[state[1], state[0], b_dim] = 1
