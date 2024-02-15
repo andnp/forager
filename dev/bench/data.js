@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1707934351427,
+  "lastUpdate": 1708036003625,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -892,6 +892,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.17083958762777093",
             "extra": "mean: 3.817469919200002 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "annahakhverdyan98@gmail.com",
+            "name": "anna-ssi",
+            "username": "anna-ssi"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "220494cb5612e1fea626b1667f81350c28e44828",
+          "message": "fix: remove ambiguity in config when using world observations",
+          "timestamp": "2024-02-15T15:25:24-07:00",
+          "tree_id": "0f28ed847682d0ad00fbbfe9b1ac7a410f194a38",
+          "url": "https://github.com/andnp/forager/commit/220494cb5612e1fea626b1667f81350c28e44828"
+        },
+        "date": 1708036003267,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 136369.08048968724,
+            "unit": "iter/sec",
+            "range": "stddev: 5.921187907569251e-7",
+            "extra": "mean: 7.333040572020458 usec\nrounds: 14542"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 55.50817439462981,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0008782865226326575",
+            "extra": "mean: 18.015364600006478 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 820.2159163702954,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00001347054186662547",
+            "extra": "mean: 1.2191911666690203 msec\nrounds: 6"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 64.30973308243607,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00021780861684097863",
+            "extra": "mean: 15.54974577049076 msec\nrounds: 61"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 793.0419136941703,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000028365445222433858",
+            "extra": "mean: 1.2609673999975257 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.2778736232755369,
+            "unit": "iter/sec",
+            "range": "stddev: 0.07698944931883997",
+            "extra": "mean: 3.598758270799993 sec\nrounds: 5"
           }
         ]
       }
