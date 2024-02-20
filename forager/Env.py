@@ -34,7 +34,7 @@ class ForagerEnv:
         r = 0.
         if self._s.objects.has_object(idx):
             obj = self._s.objects.get_object(idx)
-            r = obj.collision(self._s.rng, self._s.clock)
+            r = obj.collision(self._s)
 
             if obj.blocking:
                 n = self._s.agent_state
@@ -60,7 +60,7 @@ class ForagerEnv:
         idx = nbu.ravel(coords, self._s.size)
         obj = self._s.objects.remove_object(idx)
 
-        delta = obj.regen_delay(self._s.rng, self._s.clock)
+        delta = obj.regen_delay(self._s)
 
         if delta is not None:
             self._s.to_respawn[self._s.clock + delta].append(obj)

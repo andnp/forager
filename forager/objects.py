@@ -1,7 +1,13 @@
-import numpy as np
-
+from __future__ import annotations
 from abc import abstractmethod
 from forager.interface import Coords, RawRGB
+
+# we have some unfortunate circular imports here
+# this ensures that the cycle only exists at type-checking
+# time instead of at runtime.
+from typing import TYPE_CHECKING
+if TYPE_CHECKING:
+    from forager.state import ForagerState
 
 class ForagerObject:
     def __init__(self, name: str):
@@ -14,16 +20,16 @@ class ForagerObject:
 
         self.last_collision = 0
 
-    def regen_delay(self, rng: np.random.Generator, clock: int) -> int | None:
-        return rng.integers(10, 100)
+    def regen_delay(self, state: ForagerState) -> int | None:
+        return state.rng.integers(10, 100)
 
-    def collision(self, rng: np.random.Generator, clock: int) -> float:
-        r = self.reward(rng, clock)
-        self.last_collision = clock
+    def collision(self, state: ForagerState) -> float:
+        r = self.reward(state)
+        self.last_collision = state.clock
         return r
 
     @abstractmethod
-    def reward(self, rng: np.random.Generator, clock: int) -> float:
+    def reward(self, state: ForagerState) -> float:
         raise NotImplementedError()
 
 
@@ -35,7 +41,7 @@ class Wall(ForagerObject):
         self.collectable = False
         self.location = loc
 
-    def reward(self, rng: np.random.Generator, clock: int) -> float:
+    def reward(self, state: ForagerState) -> float:
         return 0
 
 class Flower(ForagerObject):
@@ -46,7 +52,7 @@ class Flower(ForagerObject):
         self.collectable = True
         self.location = loc
 
-    def reward(self, rng: np.random.Generator, clock: int) -> float:
+    def reward(self, state: ForagerState) -> float:
         return 1
 
 class Thorns(ForagerObject):
@@ -57,5 +63,5 @@ class Thorns(ForagerObject):
         self.collectable = True
         self.location = loc
 
-    def reward(self, rng: np.random.Generator, clock: int) -> float:
+    def reward(self, state: ForagerState) -> float:
         return -1
