@@ -20,9 +20,9 @@ def test_init():
     )
     env = ForagerEnv(config)
 
-    assert env._state == (4, 4)
-    assert env._size == (8, 8)
-    assert env._ap_size == (3, 3)
+    assert env._s.agent_state == (4, 4)
+    assert env._s.size == (8, 8)
+    assert env._s.ap_size == (3, 3)
 
     # can specify sizes as uneven tuples
     config = ForagerConfig(
@@ -32,9 +32,9 @@ def test_init():
     )
     env = ForagerEnv(config)
 
-    assert env._state == (5, 2)
-    assert env._size == (10, 5)
-    assert env._ap_size == (5, 1)
+    assert env._s.agent_state == (5, 2)
+    assert env._s.size == (10, 5)
+    assert env._s.ap_size == (5, 1)
 
     # can add objects
     config = ForagerConfig(
@@ -46,7 +46,7 @@ def test_init():
     env = ForagerEnv(config)
     env.generate_objects(0.1, 'flower')
 
-    assert len(env._obj_store) == int(100 * 0.1)
+    assert len(env._s.objects) == int(100 * 0.1)
 
     # world observation mode, apeture should be None
     config = ForagerConfig(
@@ -56,7 +56,7 @@ def test_init():
     )
     env = ForagerEnv(config)
 
-    assert env._ap_size is None
+    assert env._s.ap_size is None
 
 def test_basic_movement():
     config = ForagerConfig(
@@ -69,20 +69,20 @@ def test_basic_movement():
     env.add_object(Wall((3, 4)))
     env.add_object(Wall((3, 5)))
 
-    assert env._state == (3, 3)
+    assert env._s.agent_state == (3, 3)
 
     # stays still when bumping into a wall
     _ = env.step(0)
-    assert env._state == (3, 3)
+    assert env._s.agent_state == (3, 3)
 
     _ = env.step(1)
-    assert env._state == (4, 3)
+    assert env._s.agent_state == (4, 3)
 
     _ = env.step(3)
-    assert env._state == (3, 3)
+    assert env._s.agent_state == (3, 3)
 
     _ = env.step(2)
-    assert env._state == (3, 2)
+    assert env._s.agent_state == (3, 2)
 
 def test_vision():
     config = ForagerConfig(
@@ -97,7 +97,7 @@ def test_vision():
     env.add_object(Wall((3, 5)))
     env.add_object(Wall((0, 2)))
 
-    assert env._state == (3, 3)
+    assert env._s.agent_state == (3, 3)
 
     x, _ = env.step(0)
     expected = np.array([
@@ -106,7 +106,7 @@ def test_vision():
         [0, 0, 0],
     ], dtype=np.bool_)
 
-    assert env._state == (3, 3)
+    assert env._s.agent_state == (3, 3)
     assert np.allclose(x[:, :, 0], expected)
 
     env.step(1)
@@ -117,7 +117,7 @@ def test_vision():
         [0, 0, 0],
     ], dtype=np.bool_)
 
-    assert env._state == (4, 4)
+    assert env._s.agent_state == (4, 4)
     assert np.allclose(x[:, :, 0], expected)
 
 def test_respawn():
@@ -131,24 +131,24 @@ def test_respawn():
     )
     env = ForagerEnv(config)
     env.add_object(Flower((3, 4)))
-    assert len(env._to_respawn) == 0
+    assert len(env._s.to_respawn) == 0
 
     _, r = env.step(0)
     assert r == 1
-    assert len(env._obj_store) == 0
-    assert len(env._to_respawn) == 1
-    assert env._clock == 1
+    assert len(env._s.objects) == 0
+    assert len(env._s.to_respawn) == 1
+    assert env._s.clock == 1
 
     for _ in range(50):
         env.step(0)
 
-    assert len(env._to_respawn) == 1
-    assert env._clock == 51
+    assert len(env._s.to_respawn) == 1
+    assert env._s.clock == 51
 
     env.step(0)
-    assert env._clock == 52
-    assert len(env._obj_store) == 1
-    assert len(env._to_respawn) == 0
+    assert env._s.clock == 52
+    assert len(env._s.objects) == 1
+    assert len(env._s.to_respawn) == 0
 
 def test_wrapping_dynamics():
     config = ForagerConfig(
@@ -162,59 +162,59 @@ def test_wrapping_dynamics():
 
     # go up
     _ = env.start()
-    assert env._state == (2, 2)
+    assert env._s.agent_state == (2, 2)
     _ = env.step(0)
-    assert env._state == (2, 3)
+    assert env._s.agent_state == (2, 3)
     _ = env.step(0)
-    assert env._state == (2, 4)
+    assert env._s.agent_state == (2, 4)
     _ = env.step(0)
-    assert env._state == (2, 0)
+    assert env._s.agent_state == (2, 0)
     _ = env.step(0)
-    assert env._state == (2, 1)
+    assert env._s.agent_state == (2, 1)
     _ = env.step(0)
-    assert env._state == (2, 2)
+    assert env._s.agent_state == (2, 2)
 
     # go down
     _ = env.start()
-    assert env._state == (2, 2)
+    assert env._s.agent_state == (2, 2)
     _ = env.step(2)
-    assert env._state == (2, 1)
+    assert env._s.agent_state == (2, 1)
     _ = env.step(2)
-    assert env._state == (2, 0)
+    assert env._s.agent_state == (2, 0)
     _ = env.step(2)
-    assert env._state == (2, 4)
+    assert env._s.agent_state == (2, 4)
     _ = env.step(2)
-    assert env._state == (2, 3)
+    assert env._s.agent_state == (2, 3)
     _ = env.step(2)
-    assert env._state == (2, 2)
+    assert env._s.agent_state == (2, 2)
 
     # go right
     _ = env.start()
-    assert env._state == (2, 2)
+    assert env._s.agent_state == (2, 2)
     _ = env.step(1)
-    assert env._state == (3, 2)
+    assert env._s.agent_state == (3, 2)
     _ = env.step(1)
-    assert env._state == (4, 2)
+    assert env._s.agent_state == (4, 2)
     _ = env.step(1)
-    assert env._state == (0, 2)
+    assert env._s.agent_state == (0, 2)
     _ = env.step(1)
-    assert env._state == (1, 2)
+    assert env._s.agent_state == (1, 2)
     _ = env.step(1)
-    assert env._state == (2, 2)
+    assert env._s.agent_state == (2, 2)
 
     # go left
     _ = env.start()
-    assert env._state == (2, 2)
+    assert env._s.agent_state == (2, 2)
     _ = env.step(3)
-    assert env._state == (1, 2)
+    assert env._s.agent_state == (1, 2)
     _ = env.step(3)
-    assert env._state == (0, 2)
+    assert env._s.agent_state == (0, 2)
     _ = env.step(3)
-    assert env._state == (4, 2)
+    assert env._s.agent_state == (4, 2)
     _ = env.step(3)
-    assert env._state == (3, 2)
+    assert env._s.agent_state == (3, 2)
     _ = env.step(3)
-    assert env._state == (2, 2)
+    assert env._s.agent_state == (2, 2)
 
 def test_wrapping_vision():
     config = ForagerConfig(
@@ -236,7 +236,7 @@ def test_wrapping_vision():
 
     x = env.start()
 
-    assert env._state == (2, 2)
+    assert env._s.agent_state == (2, 2)
     assert np.allclose(x[:, :, 0], expected)
 
     # go left
@@ -250,7 +250,7 @@ def test_wrapping_vision():
         [1, 0, 0],
     ], dtype=np.bool_)
 
-    assert env._state == (1, 1)
+    assert env._s.agent_state == (1, 1)
     assert np.allclose(x[:, :, 0], expected)
 
     # go left , go left
@@ -262,7 +262,7 @@ def test_wrapping_vision():
         [0, 0, 1],
     ], dtype=np.bool_)
 
-    assert env._state == (4, 1)
+    assert env._s.agent_state == (4, 1)
     assert np.allclose(x[:, :, 0], expected)
 
 
@@ -282,7 +282,7 @@ def test_benchmark_vision(benchmark):
     env.add_object(Wall((3, 5)))
     env.add_object(Wall((0, 2)))
 
-    assert env._state == (3, 3)
+    assert env._s.agent_state == (3, 3)
 
     x, _ = benchmark(env.step, 0)
     expected = np.array([
@@ -291,7 +291,7 @@ def test_benchmark_vision(benchmark):
         [0, 0, 0],
     ], dtype=np.bool_)
 
-    assert env._state == (3, 3)
+    assert env._s.agent_state == (3, 3)
     assert np.allclose(x[:, :, 0], expected)
 
 def test_benchmark_creation(benchmark):

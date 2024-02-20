@@ -26,100 +26,70 @@ class ForagerEnv:
             config = load_config(config_path)
 
         # parse configuration
-        self._c = sanity_check(config)
-        self._size: Size = cu.to_tuple(self._c.size)
-        self._ap_size = cu.to_tuple(config.aperture) if config.aperture is not None else None
-
-        self._colors = cu.not_none(self._c.colors)
-        self.rng = np.random.default_rng(self._c.seed)
-
-        # build object storage
-        self._obj_store = ObjectStorage(self._size, self._c.object_types, self._colors, self.rng)
-        self._to_respawn: Dict[int, List[ForagerObject]] = defaultdict(list)
-
-        # ensure object types have a consistent object dimension
-        _names = set(self._c.object_types.keys())
-
-        if config.observation_mode == 'world':
-            _names |= {'agent'}
-
-        self._names = nbu.List(sorted(_names))
-        self._names_to_dims = nbu.Dict.empty(
-            key_type=nb.typeof(''),
-            value_type=nb.typeof(int(1)),
-            n_keys=len(_names),
-        )
-
-        for i, n in enumerate(self._names):
-            self._names_to_dims[n] = i
-
-        # build state information
-        self._clock = 0
-        self._state = (
-            int(self._size[0] // 2),
-            int(self._size[1] // 2),
-        )
+        config = sanity_check(config)
+        self._c = config
+        self._s = _ForagerState(config)
 
     def start(self):
-        return self._get_observation(self._state)
+        return self._get_observation(self._s.agent_state)
 
     def step(self, action: Action):
-        n = grid.step(self._state, self._size, action)
-        idx = nbu.ravel(n, self._size)
+        n = grid.step(self._s.agent_state, self._s.size, action)
+        idx = nbu.ravel(n, self._s.size)
 
         r = 0.
-        if self._obj_store.has_object(idx):
-            obj = self._obj_store.get_object(idx)
-            r = obj.collision(self.rng, self._clock)
+        if self._s.objects.has_object(idx):
+            obj = self._s.objects.get_object(idx)
+            r = obj.collision(self._s.rng, self._s.clock)
 
             if obj.blocking:
-                n = self._state
+                n = self._s.agent_state
 
             if obj.collectable:
                 self.remove_object(n)
 
         obs = self._get_observation(n)
 
-        self._state = n
-        self._clock += 1
+        self._s.agent_state = n
+        self._s.clock += 1
         self._respawn()
 
         return (obs, float(r))
 
     def add_object(self, obj: ForagerObject):
-        self._obj_store.add_object(obj)
+        self._s.objects.add_object(obj)
 
     def generate_objects(self, freq: float, name: str):
-        size = self._size[0] * self._size[1]
-        self._obj_store.add_n_deferred_objects(name, int(size * freq))
+        size = self._s.size[0] * self._s.size[1]
+        self._s.objects.add_n_deferred_objects(name, int(size * freq))
 
     def remove_object(self, coords: Coords):
-        idx = nbu.ravel(coords, self._size)
-        obj = self._obj_store.remove_object(idx)
+        idx = nbu.ravel(coords, self._s.size)
+        obj = self._s.objects.remove_object(idx)
 
-        delta = obj.regen_delay(self.rng, self._clock)
+        delta = obj.regen_delay(self._s.rng, self._s.clock)
 
         if delta is not None:
-            self._to_respawn[self._clock + delta].append(obj)
+            self._s.to_respawn[self._s.clock + delta].append(obj)
 
     def _respawn(self):
-        if self._clock not in self._to_respawn:
+        if self._s.clock not in self._s.to_respawn:
             return
 
-        for obj in self._to_respawn[self._clock]:
-            self._obj_store.add_object(obj)
+        for obj in self._s.to_respawn[self._s.clock]:
+            self._s.objects.add_object(obj)
 
-        del self._to_respawn[self._clock]
+        del self._s.to_respawn[self._s.clock]
 
     def _get_observation(self, s: Coords):
         if self._c.observation_mode == 'objects':
-            assert self._ap_size is not None, "Expected non-none aperture size when observation mode is 'objects'"
-            return get_object_vision(s, self._size, self._ap_size, self._obj_store.idx_to_name, self._names_to_dims)
+            assert self._s.ap_size is not None, "Expected non-none aperture size when observation mode is 'objects'"
+            return get_object_vision(s, self._s.size, self._s.ap_size, self._s.objects.idx_to_name, self._s.names_to_dims)
         elif self._c.observation_mode == 'colors':
-            assert self._ap_size is not None, "Expected non-none aperture size when observation mode is 'colors'"
-            return get_color_vision(s, self._size, self._ap_size, self._obj_store.idx_to_name, self._obj_store.name_to_color)
+            assert self._s.ap_size is not None, "Expected non-none aperture size when observation mode is 'colors'"
+            return get_color_vision(s, self._s.size, self._s.ap_size, self._s.objects.idx_to_name, self._s.objects.name_to_color)
         elif self._c.observation_mode == 'world':
-            return get_world_vision(s, self._size, self._obj_store.idx_to_name, self._names_to_dims)
+            return get_world_vision(s, self._s.size, self._s.objects.idx_to_name, self._s.names_to_dims)
         else:
             raise Exception()
 
@@ -130,3 +100,46 @@ class ForagerEnv:
 
     def __setstate__(self, state):
         ...
+
+
+class _ForagerState:
+    def __init__(
+        self,
+        config: ForagerConfig,
+    ):
+        self.config = config
+        self.rng = np.random.default_rng(config.seed)
+
+        # parse config
+        self.size: Size = cu.to_tuple(config.size)
+        self.ap_size = cu.to_tuple(config.aperture) if config.aperture is not None else None
+
+        # build object storage
+        self.colors = cu.not_none(config.colors)
+        self.objects = ObjectStorage(self.size, config.object_types, self.colors, self.rng)
+
+        # build respawn timers
+        self.to_respawn: Dict[int, List[ForagerObject]] = defaultdict(list)
+
+        # ensure object types have a consistent object dimension
+        _names = set(config.object_types.keys())
+
+        if config.observation_mode == 'world':
+            _names |= {'agent'}
+
+        self.names = nbu.List(sorted(_names))
+        self.names_to_dims = nbu.Dict.empty(
+            key_type=nb.typeof(''),
+            value_type=nb.typeof(int(1)),
+            n_keys=len(_names),
+        )
+
+        for i, n in enumerate(self.names):
+            self.names_to_dims[n] = i
+
+        # build state information
+        self.clock = 0
+        self.agent_state = (
+            int(self.size[0] // 2),
+            int(self.size[1] // 2),
+        )
