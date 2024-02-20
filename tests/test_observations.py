@@ -2,7 +2,7 @@ import numpy as np
 import numba as nb
 import forager._utils.numba as nbu
 
-from forager.observations import get_color_vision, get_object_vision, get_world_vision
+from forager.observations import _get_color_vision, _get_object_vision, _get_world_vision
 
 
 def test_color_vision():
@@ -31,7 +31,7 @@ def test_color_vision():
     name_to_color['a'] = a
     name_to_color['b'] = b
 
-    got = get_color_vision(state, size, ap_size, idx_to_name, name_to_color)
+    got = _get_color_vision(state, size, ap_size, idx_to_name, name_to_color)
     expected = np.array([
         [e, b, e],
         [e, e, e],
@@ -62,7 +62,7 @@ def test_object_vision():
     idx_to_name[nbu.ravel((3, 4), size)] = 'a'
     idx_to_name[nbu.ravel((5, 5), size)] = 'a'
     idx_to_name[nbu.ravel((6, 5), size)] = 'b'
-    got = get_object_vision((5, 5), size, ap_size, idx_to_name, name_to_dim)
+    got = _get_object_vision((5, 5), size, ap_size, idx_to_name, name_to_dim)
     assert got.shape[2] == 2
 
     expected_a = np.array([
@@ -100,7 +100,7 @@ def test_object_vision_wrap():
 
     idx_to_name[nbu.ravel((3, 0), size)] = 'a'
     idx_to_name[nbu.ravel((0, 3), size)] = 'b'
-    got = get_object_vision((3, 4), size, ap_size, idx_to_name, name_to_dim)
+    got = _get_object_vision((3, 4), size, ap_size, idx_to_name, name_to_dim)
     assert got.shape[2] == 2
 
     expected_a = np.array([
@@ -111,7 +111,7 @@ def test_object_vision_wrap():
 
     assert np.allclose(got[:, :, 0], expected_a)
 
-    got = get_object_vision((4, 3), size, ap_size, idx_to_name, name_to_dim)
+    got = _get_object_vision((4, 3), size, ap_size, idx_to_name, name_to_dim)
     assert got.shape[2] == 2
 
     expected_b = np.array([
@@ -142,7 +142,7 @@ def test_world_vision():
     idx_to_name[nbu.ravel((2, 2), size)] = 'a'
     idx_to_name[nbu.ravel((3, 1), size)] = 'a'
     idx_to_name[nbu.ravel((3, 0), size)] = 'b'
-    got = get_world_vision((3, 1), size, idx_to_name, name_to_dim)
+    got = _get_world_vision((3, 1), size, idx_to_name, name_to_dim)
 
     excepted_agent = np.array([
         [0, 0, 0, 0],

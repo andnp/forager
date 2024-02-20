@@ -3,10 +3,20 @@ import forager._utils.numba as nbu
 
 from typing import Dict
 from forager.interface import Coords, Size
+from forager.state import ForagerState
 
+def get_color_vision(s: ForagerState):
+    assert s.ap_size is not None, "Expected non-none aperture size when observation mode is 'colors'"
+    return _get_color_vision(
+        s.agent_state,
+        s.size,
+        s.ap_size,
+        s.objects.idx_to_name,
+        s.objects.name_to_color,
+    )
 
 @nbu.njit
-def get_color_vision(
+def _get_color_vision(
     state: Coords,
     size: Size,
     ap_size: Size,
@@ -38,8 +48,19 @@ def get_color_vision(
     return out
 
 
+def get_object_vision(s: ForagerState):
+    assert s.ap_size is not None, "Expected non-none aperture size when observation mode is 'objects'"
+    return _get_object_vision(
+        s.agent_state,
+        s.size,
+        s.ap_size,
+        s.objects.idx_to_name,
+        s.names_to_dims,
+    )
+
+
 @nbu.njit
-def get_object_vision(
+def _get_object_vision(
     state: Coords,
     size: Size,
     ap_size: Size,
@@ -71,8 +92,18 @@ def get_object_vision(
 
     return out
 
+
+def get_world_vision(s: ForagerState):
+    return _get_world_vision(
+        s.agent_state,
+        s.size,
+        s.objects.idx_to_name,
+        s.names_to_dims,
+    )
+
+
 @nbu.njit
-def get_world_vision(
+def _get_world_vision(
     state: Coords,
     size: Size,
     objs: Dict[Coords, str],
