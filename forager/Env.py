@@ -1,5 +1,6 @@
 import forager._utils.numba as nbu
 import forager.grid as grid
+import forager.ObjectStorage as obj_store
 
 from forager.config import ForagerConfig, load_config, sanity_check
 from forager.exceptions import ForagerInvalidConfigException
@@ -32,8 +33,8 @@ class ForagerEnv:
         idx = nbu.ravel(n, self._s.size)
 
         r = 0.
-        if self._s.objects.has_object(idx):
-            obj = self._s.objects.get_object(idx)
+        if obj_store.has_object(self._s, idx):
+            obj = obj_store.get_object(self._s, idx)
             r = obj.collision(self._s)
 
             if obj.blocking:
@@ -50,15 +51,15 @@ class ForagerEnv:
         return (obs, float(r))
 
     def add_object(self, obj: ForagerObject):
-        self._s.objects.add_object(obj)
+        obj_store.add_object(self._s, obj)
 
     def generate_objects(self, freq: float, name: str):
         size = self._s.size[0] * self._s.size[1]
-        self._s.objects.add_n_deferred_objects(name, int(size * freq))
+        obj_store.add_n_deferred_objects(self._s, name, int(size * freq))
 
     def remove_object(self, coords: Coords):
         idx = nbu.ravel(coords, self._s.size)
-        obj = self._s.objects.remove_object(idx)
+        obj = obj_store.remove_object(self._s, idx)
 
         delta = obj.regen_delay(self._s)
 
@@ -70,7 +71,7 @@ class ForagerEnv:
             return
 
         for obj in self._s.to_respawn[self._s.clock]:
-            self._s.objects.add_object(obj)
+            obj_store.add_object(self._s, obj)
 
         del self._s.to_respawn[self._s.clock]
 

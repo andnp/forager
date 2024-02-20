@@ -1,100 +1,78 @@
-import numpy as np
-import numba as nb
-
 import forager.grid as grid
 import forager._utils.numba as nbu
 
 from typing import Dict
-from forager.colors import Palette
-from forager.config import ForagerObject, ObjectFactory
+from forager.config import ForagerObject
 from forager.interface import Size
 from forager.logger import logger
+from forager.state import ForagerState
 
-class ObjectStorage:
-    def __init__(self, size: Size, obj_factories: Dict[str, ObjectFactory], palette: Palette, rng: np.random.Generator):
-        self.rng = rng
-        self.size = size
-        self.factories = obj_factories
+def add_object(s: ForagerState, obj: ForagerObject):
+    coords = obj.location
+    if coords is None:
+        coords = grid.sample_unpopulated(s.rng, s.size, s.objects.idx_to_name)
 
-        self.idx_to_name = nbu.Dict.empty(
-            key_type=nb.types.int64,
-            value_type=nb.typeof(''),
-        )
-        self.name_to_color = nbu.Dict.empty(
-            key_type=nb.typeof(''),
-            value_type=nb.types.uint8[:],
-        )
+    idx = nbu.ravel(coords, s.size)
 
-        self._idx_to_config: Dict[int, ForagerObject] = {}
-        self._colors = palette
+    if idx in s.objects.idx_to_name:
+        prior = s.objects.idx_to_name[idx]
+        logger.warning(f'Object already found at {coords}: {prior}. Replacing with {obj.name}')
 
-    def add_object(self, obj: ForagerObject):
-        coords = obj.location
-        if coords is None:
-            coords = grid.sample_unpopulated(self.rng, self.size, self.idx_to_name)
+    s.objects.idx_to_name[idx] = obj.name
+    s.objects.idx_to_object[idx] = obj
 
-        idx = nbu.ravel(coords, self.size)
+    color = obj.color
+    if color is None:
+        color = s.colors.generate(obj.name)
 
-        if idx in self.idx_to_name:
-            prior = self.idx_to_name[idx]
-            logger.warning(f'Object already found at {coords}: {prior}. Replacing with {obj.name}')
+    s.objects.name_to_color[obj.name] = color
 
-        self.idx_to_name[idx] = obj.name
-        self._idx_to_config[idx] = obj
+def add_deferred_object(s: ForagerState, name: str):
+    if name not in s.objects.name_to_color:
+        obj = s.config.object_types[name]()
+        return add_object(s, obj)
 
-        color = obj.color
-        if color is None:
-            color = self._colors.generate(obj.name)
+    coords = grid.sample_unpopulated(s.rng, s.size, s.objects.idx_to_name)
+    idx = nbu.ravel(coords, s.size)
 
-        self.name_to_color[obj.name] = color
+    if idx in s.objects.idx_to_name:
+        prior = s.objects.idx_to_name[idx]
+        logger.warning(f'Object already found at {coords}: {prior}. Replacing with {name}')
 
-    def add_deferred_object(self, name: str):
-        if name not in self.name_to_color:
-            obj = self.factories[name]()
-            return self.add_object(obj)
+    s.objects.idx_to_name[idx] = name
 
-        coords = grid.sample_unpopulated(self.rng, self.size, self.idx_to_name)
-        idx = nbu.ravel(coords, self.size)
+def add_n_deferred_objects(s: ForagerState, name: str, n: int):
+    # first add a single object "manually" so that caches can be built correctly
+    add_deferred_object(s, name)
 
-        if idx in self.idx_to_name:
-            prior = self.idx_to_name[idx]
-            logger.warning(f'Object already found at {coords}: {prior}. Replacing with {name}')
+    # then add n-1 objects quickly without worrying about cache states
+    collisions = _add_many(s.rng, s.size, name, n - 1, s.objects.idx_to_name)
 
-        self.idx_to_name[idx] = name
+    if collisions > 0:
+        logger.warning(f'Encountered {collisions} collisions while generating objects of type: {name}')
 
-    def add_n_deferred_objects(self, name: str, n: int):
-        # first add a single object "manually" so that caches can be built correctly
-        self.add_deferred_object(name)
-
-        # then add n-1 objects quickly without worrying about cache states
-        collisions = _add_many(self.rng, self.size, name, n - 1, self.idx_to_name)
-
-        if collisions > 0:
-            logger.warning(f'Encountered {collisions} collisions while generating objects of type: {name}')
-
-    def get_object(self, idx: int):
-        if idx in self._idx_to_config:
-            return self._idx_to_config[idx]
-
-        name = self.idx_to_name[idx]
-        obj = self.factories[name]()
-        self._idx_to_config[idx] = obj
-
+def get_object(s: ForagerState, idx: int):
+    # if object is already initialized
+    obj = s.objects.idx_to_object.get(idx, None)
+    if obj is not None:
         return obj
 
-    def has_object(self, idx: int):
-        return idx in self.idx_to_name
+    name = s.objects.idx_to_name[idx]
+    obj = s.config.object_types[name]()
+    s.objects.idx_to_object[idx] = obj
 
-    def remove_object(self, idx: int):
-        obj = self.get_object(idx)
+    return obj
 
-        del self.idx_to_name[idx]
-        del self._idx_to_config[idx]
+def has_object(s: ForagerState, idx: int):
+    return idx in s.objects.idx_to_name
 
-        return obj
+def remove_object(s: ForagerState, idx: int):
+    obj = get_object(s, idx)
 
-    def __len__(self):
-        return len(self.idx_to_name)
+    del s.objects.idx_to_name[idx]
+    del s.objects.idx_to_object[idx]
+
+    return obj
 
 
 @nbu.njit(nogil=False)

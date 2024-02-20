@@ -9,7 +9,6 @@ from typing import Dict, List
 from forager.config import ForagerConfig
 from forager.interface import Size
 from forager.objects import ForagerObject
-from forager.ObjectStorage import ObjectStorage
 
 class ForagerState:
     def __init__(
@@ -25,7 +24,7 @@ class ForagerState:
 
         # build object storage
         self.colors = cu.not_none(config.colors)
-        self.objects = ObjectStorage(self.size, config.object_types, self.colors, self.rng)
+        self.objects = ObjectStoreState()
 
         # build respawn timers
         self.to_respawn: Dict[int, List[ForagerObject]] = defaultdict(list)
@@ -52,3 +51,21 @@ class ForagerState:
             int(self.size[0] // 2),
             int(self.size[1] // 2),
         )
+
+
+class ObjectStoreState:
+    def __init__(self) -> None:
+        self.idx_to_name = nbu.Dict.empty(
+            key_type=nb.types.int64,
+            value_type=nb.typeof(''),
+        )
+
+        self.name_to_color = nbu.Dict.empty(
+            key_type=nb.typeof(''),
+            value_type=nb.types.uint8[:],
+        )
+
+        self.idx_to_object: Dict[int, ForagerObject] = {}
+
+    def __len__(self) -> int:
+        return len(self.idx_to_name)
