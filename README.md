@@ -52,32 +52,32 @@ Objects have a few configurable settings:
 
 Objects can emit a reward when the agent collides with them by specifying the `reward` function:
 ```python
-def reward(self, rng: np.random.Generator, clock: int):
+def reward(self, s: ForagerState):
     # objects are *not* notified at every clock cycle, but can
     # simulate the passage of time by tracking how long since last contact
-    time_since_last_collision = clock - self.last_collision
+    time_since_last_collision = s.clock - self.last_collision
     r = np.sin(time_since_last_collision)
 
     # objects are handed an rng owned by the global environment
     # this can be used in combination with `clock` for simulations
     # or to add noise to the reward signal
-    eps = rng.normal(0, 1)
+    eps = s.rng.normal(0, 1)
     return r + eps
 ```
 
 Finally, objects can control how much time passes until they respawn:
 ```python
-def regen_delay(self, rng: np.random.Generator, clock: int):
+def regen_delay(self, s: ForagerState):
     # prevents the object from respawning, this object is permanently removed changing the env forever
     # use with caution!
     return None
 
 # default implementation:
-def regen_delay(self, rng: np.random.Generator, clock: int):
+def regen_delay(self, s: ForagerState):
     # a random number of timesteps into the future before the object reappears
     # self.location can be modified here to control _where_ the object reappears
     # otherwise if self.location is None, then the object will be randomly placed
-    return rng.integers(10, 100)
+    return s.rng.integers(10, 100)
 ```
 
 ## Design philosophy
