@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1708036003625,
+  "lastUpdate": 1708636268404,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -958,6 +958,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.07698944931883997",
             "extra": "mean: 3.598758270799993 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "annahakhverdyan98@gmail.com",
+            "name": "anna-ssi",
+            "username": "anna-ssi"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "3b4378b13e678dd759d0072681627e8a58a2413b",
+          "message": "feat: added get and set function to support environment checkpointing.",
+          "timestamp": "2024-02-22T14:09:38-07:00",
+          "tree_id": "47714e90fc32286681811308a4233e144e733585",
+          "url": "https://github.com/andnp/forager/commit/3b4378b13e678dd759d0072681627e8a58a2413b"
+        },
+        "date": 1708636268062,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 134519.97939478507,
+            "unit": "iter/sec",
+            "range": "stddev: 6.3952003110424e-7",
+            "extra": "mean: 7.433839973058804 usec\nrounds: 14885"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 62.07117104570516,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0005187619848503535",
+            "extra": "mean: 16.110538647058313 msec\nrounds: 51"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 833.7306947078537,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00004901923348753765",
+            "extra": "mean: 1.1994280723350463 msec\nrounds: 788"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 65.46966675364597,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00009064082602600477",
+            "extra": "mean: 15.27424912307669 msec\nrounds: 65"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 806.439646379406,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00000809187755798692",
+            "extra": "mean: 1.2400184000000536 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.28679555193036876,
+            "unit": "iter/sec",
+            "range": "stddev: 0.029970396652690575",
+            "extra": "mean: 3.4868044266 sec\nrounds: 5"
           }
         ]
       }
