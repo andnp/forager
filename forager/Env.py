@@ -124,9 +124,48 @@ class ForagerEnv:
             raise Exception()
 
     def __getstate__(self):
-        # TODO: this should return a minimum necessary state to restart the env
-        # should avoid cached and precomputed values that are only for optimization
-        return {}
+        return {
+            '_c': self._c,
+            '_size': self._size,
+            '_ap_size': self._ap_size,
+            '_colors': self._colors,
+            '_to_respawn': self._to_respawn,
+            '_names': list(self._names),
+            '_names_to_dims': dict(self._names_to_dims),
+            '_clock': self._clock,
+            '_state': self._state,
+            '_obj_store.idx_to_name': dict(self._obj_store.idx_to_name),
+            '_obj_store.name_to_color': dict(self._obj_store.name_to_color),
+            '_obj_store._idx_to_config': self._obj_store._idx_to_config,
+            'rng': self.rng,
+        }
 
     def __setstate__(self, state):
-        ...
+        self._c = state['_c']
+        self._size = state['_size']
+        self._ap_size = state['_ap_size']
+        self._colors = state['_colors']
+        self._to_respawn = state['_to_respawn']
+        self._names = nbu.List(state['_names'])
+        self._clock = state['_clock']
+        self._state = state['_state']
+        self.rng = state['rng']
+
+        self._names_to_dims = nbu.Dict.empty(
+            key_type=nb.typeof(''),
+            value_type=nb.typeof(int(1)),
+            n_keys=len(self._names),
+        )
+        for i, n in enumerate(state['_names_to_dims']):
+            self._names_to_dims[n] = i
+
+        # build object storage
+        # as the object storage is numba dictionary, we need to rebuild it from the saved state
+        self._obj_store = ObjectStorage(self._size, self._c.object_types, self._colors, self.rng)
+        self._obj_store._idx_to_config.update(state['_obj_store._idx_to_config'])
+
+        for key, val in state['_obj_store.idx_to_name'].items():
+            self._obj_store.idx_to_name[key] = val
+
+        for key, val in state['_obj_store.name_to_color'].items():
+            self._obj_store.name_to_color[key] = val
