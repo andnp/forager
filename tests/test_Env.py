@@ -2,7 +2,7 @@ import pickle
 import numpy as np
 from forager.Env import ForagerEnv
 from forager.config import ForagerConfig
-from forager.objects import Flower, Wall
+from forager.objects import Flower, Wall, Thorns
 
 def test_pickleable():
     env = ForagerEnv(config=ForagerConfig(size=1, object_types={}))
@@ -265,6 +265,35 @@ def test_wrapping_vision():
     assert env._state == (4, 1)
     assert np.allclose(x[:, :, 0], expected)
 
+def test_checkpointing():
+    config = ForagerConfig(
+        size=5,
+        object_types={
+            'flower': Flower,
+            'thorns': Thorns,
+        },
+        aperture=3
+    )
+    env = ForagerEnv(config)
+    env.generate_objects(0.1, 'flower')
+    env.generate_objects(0.2, 'thorns')
+
+    env.start()
+    for _ in range(5):
+        env.step(0)
+
+    raw = pickle.dumps(env)
+    env2 = pickle.loads(raw)
+
+    obs, rew = env.step(1)
+    obs2, rew2 = env2.step(1)
+
+    assert np.array_equal(obs, obs2) and rew == rew2
+
+    obs, rew = env.step(2)
+    obs2, rew2 = env2.step(2)
+
+    assert np.array_equal(obs, obs2) and rew == rew2
 
 # ----------------------------
 # -- Performance benchmarks --
