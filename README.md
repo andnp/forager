@@ -48,7 +48,7 @@ Objects have a few configurable settings:
 * `blocking` prevents the agent from occupying the same space as the object (think: wall)
 * `collectable` means the object is removed when the agent collides. By default, collected objects are respawned after some delay.
 * `color` specifies a color for the object class. **Note:** currently can only specify one color per _class_.
-* `location` allows controlling the specific location of an object. If unspecified, object is placed uniform randomly.
+* `target_location` allows controlling the specific location of an object. If unspecified, object is placed uniform randomly.
 
 Objects can emit a reward when the agent collides with them by specifying the `reward` function:
 ```python

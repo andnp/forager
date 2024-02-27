@@ -29,10 +29,11 @@ class ObjectStorage:
         self._colors = palette
 
     def add_object(self, obj: ForagerObject):
-        coords = obj.location
+        coords = obj.target_location
         if coords is None:
             coords = grid.sample_unpopulated(self.rng, self.size, self.idx_to_name)
 
+        obj.current_location = coords
         idx = nbu.ravel(coords, self.size)
 
         if idx in self.idx_to_name:
@@ -79,6 +80,9 @@ class ObjectStorage:
         name = self.idx_to_name[idx]
         obj = self.factories[name]()
         self._idx_to_config[idx] = obj
+
+        coords = nbu.unravel(idx, self.size)
+        obj.current_location = coords
 
         return obj
 

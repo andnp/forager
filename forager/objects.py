@@ -9,7 +9,8 @@ class ForagerObject:
 
         self.collectable: bool = True
         self.blocking: bool = False
-        self.location: Coords | None = None
+        self.target_location: Coords | None = None
+        self.current_location: Coords | None = None
         self.color: RawRGB | None = None
 
         self.last_collision = 0
@@ -33,7 +34,7 @@ class Wall(ForagerObject):
 
         self.blocking = True
         self.collectable = False
-        self.location = loc
+        self.target_location = loc
 
     def reward(self, rng: np.random.Generator, clock: int) -> float:
         return 0
@@ -44,7 +45,7 @@ class Flower(ForagerObject):
 
         self.blocking = False
         self.collectable = True
-        self.location = loc
+        self.target_location = loc
 
     def reward(self, rng: np.random.Generator, clock: int) -> float:
         return 1
@@ -55,7 +56,7 @@ class Thorns(ForagerObject):
 
         self.blocking = False
         self.collectable = True
-        self.location = loc
+        self.target_location = loc
 
     def reward(self, rng: np.random.Generator, clock: int) -> float:
         return -1
