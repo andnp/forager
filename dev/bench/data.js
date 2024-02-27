@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1708636268404,
+  "lastUpdate": 1709010808328,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -1024,6 +1024,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.029970396652690575",
             "extra": "mean: 3.4868044266 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "ec58d7f585ee640508463aaa57842f6cb2f37e11",
+          "message": "feat: add current object location to obj state\n\nBREAKING CHANGE: in order to distinguish between\na target location and the actual current location,\nit seemed like a good idea to rename the ambiguous\n`location` attribute. Unfortunately this is a\npublic API change.",
+          "timestamp": "2024-02-26T22:12:06-07:00",
+          "tree_id": "6ed38935c068594e21d6a730535bbdaaa096ab1c",
+          "url": "https://github.com/andnp/forager/commit/ec58d7f585ee640508463aaa57842f6cb2f37e11"
+        },
+        "date": 1709010807814,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 131860.2829550469,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000001227953898111577",
+            "extra": "mean: 7.583784727209442 usec\nrounds: 15269"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 61.285655606799864,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000803799313761389",
+            "extra": "mean: 16.317031940000106 msec\nrounds: 50"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 821.9439900130827,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000011483445439838216",
+            "extra": "mean: 1.216627911573492 msec\nrounds: 769"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 63.88905964042066,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00008068064795241596",
+            "extra": "mean: 15.652132080643904 msec\nrounds: 62"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 794.7435028927778,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000008221763942455104",
+            "extra": "mean: 1.2582675999993853 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.29523883147432567,
+            "unit": "iter/sec",
+            "range": "stddev: 0.05087133356264821",
+            "extra": "mean: 3.387088327800001 sec\nrounds: 5"
           }
         ]
       }
