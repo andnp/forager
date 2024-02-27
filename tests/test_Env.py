@@ -265,6 +265,26 @@ def test_wrapping_vision():
     assert env._state == (4, 1)
     assert np.allclose(x[:, :, 0], expected)
 
+def test_object_location():
+    config = ForagerConfig(
+        size=5,
+        object_types={
+            'flower': Flower,
+        },
+        aperture=3
+    )
+    env = ForagerEnv(config)
+    f = Flower((2, 0))
+    assert f.target_location == (2, 0)
+    env.add_object(f)
+
+    env.start()
+    _, r = env.step(2)
+    _, r = env.step(2)
+    assert r == 1
+    assert f.current_location == (2, 0)
+
+
 def test_checkpointing():
     config = ForagerConfig(
         size=5,
