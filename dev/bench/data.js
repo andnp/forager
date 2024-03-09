@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1709010808328,
+  "lastUpdate": 1709956825165,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -1090,6 +1090,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.05087133356264821",
             "extra": "mean: 3.387088327800001 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "andnpatterson@gmail.com",
+            "name": "andnp",
+            "username": "andnp"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "4b64dc4def210d604035cd56f8440968abc7fc03",
+          "message": "ci: migrate from pdm back to pip",
+          "timestamp": "2024-03-08T20:59:10-07:00",
+          "tree_id": "65ce8708628c7521ee5799daac5c51d31d2a3f95",
+          "url": "https://github.com/andnp/forager/commit/4b64dc4def210d604035cd56f8440968abc7fc03"
+        },
+        "date": 1709956824634,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 135329.95178854666,
+            "unit": "iter/sec",
+            "range": "stddev: 6.006155971783048e-7",
+            "extra": "mean: 7.389347197599701 usec\nrounds: 30029"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 63.31829772545224,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0002417635652225838",
+            "extra": "mean: 15.793223063828945 msec\nrounds: 47"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 822.397035239842,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00012041244141580092",
+            "extra": "mean: 1.215957690932534 msec\nrounds: 783"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 64.59338601545929,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0001733618911605779",
+            "extra": "mean: 15.481461209676599 msec\nrounds: 62"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 797.5103640424117,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000008938535771782522",
+            "extra": "mean: 1.253902200005541 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.3045104964043986,
+            "unit": "iter/sec",
+            "range": "stddev: 0.006019224194795315",
+            "extra": "mean: 3.2839590483999985 sec\nrounds: 5"
           }
         ]
       }
