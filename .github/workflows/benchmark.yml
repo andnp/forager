@@ -13,15 +13,22 @@ jobs:
     name: Run pytest-benchmark
     runs-on: ubuntu-latest
     steps:
-      - uses: actions/checkout@v3
-      - name: Set up PDM
-        uses: pdm-project/setup-pdm@v3
+      - uses: actions/checkout@v4
+
+      - name: Set up Python 3.11
+        uses: actions/setup-python@v4
         with:
           python-version: "3.11"
-      - name: Run benchmark
+          cache: 'pip'
+
+      - name: Install dependencies
         run: |
-          pdm install
-          pdm run pytest --benchmark-json output.json
+          python -m venv .venv
+          source .venv/bin/activate
+          python -m pip install --upgrade pip
+          pip install -r requirements.txt
+          echo PATH=$PATH >> $GITHUB_ENV
+          pytest --benchmark-json output.json
 
       - name: Store benchmark result
         uses: benchmark-action/github-action-benchmark@v1
