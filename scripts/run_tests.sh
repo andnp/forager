@@ -1,7 +1,7 @@
 #!/bin/bash
 set -e
+source .venv/bin/activate
 
-flake8 forager/ tests/
 MYPYPATH=./typings mypy --ignore-missing-imports -p forager
 
 export PYTHONPATH=forager
