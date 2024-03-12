@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1710209129557,
+  "lastUpdate": 1710209138614,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -1288,6 +1288,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.03787953606829261",
             "extra": "mean: 3.3097979498 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "4ba141c3f6b07292c920ce83b17b89efeb7f999a",
+          "message": "chore(deps): bump pytest from 8.0.2 to 8.1.1\n\nBumps [pytest](https://github.com/pytest-dev/pytest) from 8.0.2 to 8.1.1.\n- [Release notes](https://github.com/pytest-dev/pytest/releases)\n- [Changelog](https://github.com/pytest-dev/pytest/blob/main/CHANGELOG.rst)\n- [Commits](https://github.com/pytest-dev/pytest/compare/8.0.2...8.1.1)\n\n---\nupdated-dependencies:\n- dependency-name: pytest\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-03-11T20:04:22-06:00",
+          "tree_id": "57d2f560a4a921461fe5a6ac2a9306fb6d8c5ccd",
+          "url": "https://github.com/andnp/forager/commit/4ba141c3f6b07292c920ce83b17b89efeb7f999a"
+        },
+        "date": 1710209137630,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 132947.6060816921,
+            "unit": "iter/sec",
+            "range": "stddev: 9.144020414546639e-7",
+            "extra": "mean: 7.521760108907352 usec\nrounds: 20576"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 63.41537877886272,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0002567174752392829",
+            "extra": "mean: 15.769045604649367 msec\nrounds: 43"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 826.4923347558165,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000049343002907363395",
+            "extra": "mean: 1.2099325764411906 msec\nrounds: 798"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 64.19290034474336,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00019028474803424114",
+            "extra": "mean: 15.578046709676176 msec\nrounds: 62"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 788.9052157265951,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000022439315954724687",
+            "extra": "mean: 1.2675793999903817 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.30580302403474263,
+            "unit": "iter/sec",
+            "range": "stddev: 0.009723308398842596",
+            "extra": "mean: 3.2700788461999934 sec\nrounds: 5"
           }
         ]
       }
