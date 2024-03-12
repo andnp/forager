@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1709956825165,
+  "lastUpdate": 1710209122445,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -1156,6 +1156,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.006019224194795315",
             "extra": "mean: 3.2839590483999985 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "1f95d1d425e69f37402e9047d6c7cf08499c73b1",
+          "message": "chore(deps): bump packaging from 23.2 to 24.0\n\nBumps [packaging](https://github.com/pypa/packaging) from 23.2 to 24.0.\n- [Release notes](https://github.com/pypa/packaging/releases)\n- [Changelog](https://github.com/pypa/packaging/blob/main/CHANGELOG.rst)\n- [Commits](https://github.com/pypa/packaging/compare/23.2...24.0)\n\n---\nupdated-dependencies:\n- dependency-name: packaging\n  dependency-type: direct:production\n  update-type: version-update:semver-major\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-03-11T20:04:02-06:00",
+          "tree_id": "0950984739efa654bd7e2240b660029e26c735d1",
+          "url": "https://github.com/andnp/forager/commit/1f95d1d425e69f37402e9047d6c7cf08499c73b1"
+        },
+        "date": 1710209121939,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 133537.38957228189,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0000014951817684755015",
+            "extra": "mean: 7.4885393761476395 usec\nrounds: 25587"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 61.47051527918218,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0013518765487821158",
+            "extra": "mean: 16.267961891294956 msec\nrounds: 46"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 821.4086995317408,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00005048394302190644",
+            "extra": "mean: 1.2174207560378512 msec\nrounds: 787"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 64.74447741425884,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0002622054179419627",
+            "extra": "mean: 15.44533279034186 msec\nrounds: 62"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 807.3601535246733,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000011309422471691912",
+            "extra": "mean: 1.2386045999846829 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.30238595042126853,
+            "unit": "iter/sec",
+            "range": "stddev: 0.030023880030564987",
+            "extra": "mean: 3.307031952400075 sec\nrounds: 5"
           }
         ]
       }
