@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1710803493193,
+  "lastUpdate": 1710803507121,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -1420,6 +1420,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.017239443731249655",
             "extra": "mean: 3.263722005400001 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "b89f1a5a3dc48b0a2155ea3cc14784b1fbe03370",
+          "message": "chore(deps): bump zipp from 3.17.0 to 3.18.1\n\nBumps [zipp](https://github.com/jaraco/zipp) from 3.17.0 to 3.18.1.\n- [Release notes](https://github.com/jaraco/zipp/releases)\n- [Changelog](https://github.com/jaraco/zipp/blob/main/NEWS.rst)\n- [Commits](https://github.com/jaraco/zipp/compare/v3.17.0...v3.18.1)\n\n---\nupdated-dependencies:\n- dependency-name: zipp\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-03-18T17:10:30-06:00",
+          "tree_id": "765a42b8a45182a9cd586ea7a504bf685e71ae03",
+          "url": "https://github.com/andnp/forager/commit/b89f1a5a3dc48b0a2155ea3cc14784b1fbe03370"
+        },
+        "date": 1710803506650,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 137588.41212565964,
+            "unit": "iter/sec",
+            "range": "stddev: 8.662138955517358e-7",
+            "extra": "mean: 7.268053933834914 usec\nrounds: 15519"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 59.18900314811679,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0005574032903617962",
+            "extra": "mean: 16.89503027272756 msec\nrounds: 44"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 810.6010538504794,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00002544952911220757",
+            "extra": "mean: 1.23365247953953 msec\nrounds: 782"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 63.57710215926871,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0001880753076312263",
+            "extra": "mean: 15.72893331147546 msec\nrounds: 61"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 809.8995643567905,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000018271072384620977",
+            "extra": "mean: 1.2347209999973074 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.301161106704009,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0205892990186948",
+            "extra": "mean: 3.3204818873999984 sec\nrounds: 5"
           }
         ]
       }
