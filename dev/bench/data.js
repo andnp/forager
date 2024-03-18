@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1710803507121,
+  "lastUpdate": 1710803521343,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -1486,6 +1486,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.0205892990186948",
             "extra": "mean: 3.3204818873999984 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "7b9834e617a6daaf96c2d825bbd46f50907719e9",
+          "message": "chore(deps): bump commitizen from 3.18.3 to 3.18.4\n\nBumps [commitizen](https://github.com/commitizen-tools/commitizen) from 3.18.3 to 3.18.4.\n- [Release notes](https://github.com/commitizen-tools/commitizen/releases)\n- [Changelog](https://github.com/commitizen-tools/commitizen/blob/master/CHANGELOG.md)\n- [Commits](https://github.com/commitizen-tools/commitizen/compare/v3.18.3...v3.18.4)\n\n---\nupdated-dependencies:\n- dependency-name: commitizen\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-03-18T17:10:40-06:00",
+          "tree_id": "9892de9fe796a01db679fdcf28f728298a00f19a",
+          "url": "https://github.com/andnp/forager/commit/7b9834e617a6daaf96c2d825bbd46f50907719e9"
+        },
+        "date": 1710803520822,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 136204.78605994448,
+            "unit": "iter/sec",
+            "range": "stddev: 6.065773930382941e-7",
+            "extra": "mean: 7.341885912583825 usec\nrounds: 15567"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 61.88746060696211,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00039876581473112364",
+            "extra": "mean: 16.15836213333826 msec\nrounds: 45"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 804.0305884120908,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000079782224776502",
+            "extra": "mean: 1.2437337763168144 msec\nrounds: 760"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 64.61123300879117,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00007016052937246403",
+            "extra": "mean: 15.477184901639896 msec\nrounds: 61"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 800.206005032149,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000011244955896980122",
+            "extra": "mean: 1.2496782000027906 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.29582203061276624,
+            "unit": "iter/sec",
+            "range": "stddev: 0.014215265087118662",
+            "extra": "mean: 3.380410843399994 sec\nrounds: 5"
           }
         ]
       }
