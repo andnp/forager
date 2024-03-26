@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1710803717424,
+  "lastUpdate": 1711414548861,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -1618,6 +1618,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.035613744221442076",
             "extra": "mean: 3.4878580081999986 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "5ae7b2287cb7eb86b36e68607a8673007014dec7",
+          "message": "chore(deps): bump importlib-metadata from 7.0.2 to 7.1.0\n\nBumps [importlib-metadata](https://github.com/python/importlib_metadata) from 7.0.2 to 7.1.0.\n- [Release notes](https://github.com/python/importlib_metadata/releases)\n- [Changelog](https://github.com/python/importlib_metadata/blob/main/NEWS.rst)\n- [Commits](https://github.com/python/importlib_metadata/compare/v7.0.2...v7.1.0)\n\n---\nupdated-dependencies:\n- dependency-name: importlib-metadata\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-03-25T18:54:33-06:00",
+          "tree_id": "d00e6a0e329fda7bc58b9071559d179be924bb96",
+          "url": "https://github.com/andnp/forager/commit/5ae7b2287cb7eb86b36e68607a8673007014dec7"
+        },
+        "date": 1711414548470,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 136662.87350354393,
+            "unit": "iter/sec",
+            "range": "stddev: 5.261659149588495e-7",
+            "extra": "mean: 7.317276260652225 usec\nrounds: 15232"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 62.371738583518294,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0002661706294787013",
+            "extra": "mean: 16.0329024444454 msec\nrounds: 45"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 828.6131418667945,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00004892036832635137",
+            "extra": "mean: 1.2068357952265705 msec\nrounds: 796"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 64.1621861772226,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0007006292466491482",
+            "extra": "mean: 15.585503854838993 msec\nrounds: 62"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 800.8772489065667,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00001787023239689769",
+            "extra": "mean: 1.2486307999949986 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.30653454980568046,
+            "unit": "iter/sec",
+            "range": "stddev: 0.009241585770674984",
+            "extra": "mean: 3.262275005000004 sec\nrounds: 5"
           }
         ]
       }
