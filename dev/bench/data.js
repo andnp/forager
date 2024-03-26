@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1711414548861,
+  "lastUpdate": 1711414568046,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -1684,6 +1684,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.009241585770674984",
             "extra": "mean: 3.262275005000004 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "e6e4251ad71340db383dd6a0c511bf494cc63add",
+          "message": "chore(deps): bump filelock from 3.13.1 to 3.13.3\n\nBumps [filelock](https://github.com/tox-dev/py-filelock) from 3.13.1 to 3.13.3.\n- [Release notes](https://github.com/tox-dev/py-filelock/releases)\n- [Changelog](https://github.com/tox-dev/filelock/blob/main/docs/changelog.rst)\n- [Commits](https://github.com/tox-dev/py-filelock/compare/3.13.1...3.13.3)\n\n---\nupdated-dependencies:\n- dependency-name: filelock\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-03-25T18:54:53-06:00",
+          "tree_id": "5490754d9bf668a2de469099f170256d13066a80",
+          "url": "https://github.com/andnp/forager/commit/e6e4251ad71340db383dd6a0c511bf494cc63add"
+        },
+        "date": 1711414567681,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 137022.75418805378,
+            "unit": "iter/sec",
+            "range": "stddev: 5.699709387762644e-7",
+            "extra": "mean: 7.298057946109976 usec\nrounds: 29769"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 63.8360228759622,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00024085631782444787",
+            "extra": "mean: 15.66513631250288 msec\nrounds: 48"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 823.9619408549305,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000013185198408022423",
+            "extra": "mean: 1.2136482893401788 msec\nrounds: 788"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 65.9570568900207,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00012237464876500636",
+            "extra": "mean: 15.161379951616672 msec\nrounds: 62"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 794.8320654958936,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000019167657003922598",
+            "extra": "mean: 1.2581274000012854 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.302218467061328,
+            "unit": "iter/sec",
+            "range": "stddev: 0.007825446236677094",
+            "extra": "mean: 3.308864642599997 sec\nrounds: 5"
           }
         ]
       }
