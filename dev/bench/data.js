@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1711414568046,
+  "lastUpdate": 1711414583326,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -1750,6 +1750,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.007825446236677094",
             "extra": "mean: 3.308864642599997 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "2a262d2c0dcab1e0565b78b51684504aa655f561",
+          "message": "chore(deps): bump numba from 0.59.0 to 0.59.1\n\nBumps [numba](https://github.com/numba/numba) from 0.59.0 to 0.59.1.\n- [Release notes](https://github.com/numba/numba/releases)\n- [Commits](https://github.com/numba/numba/compare/0.59.0...0.59.1)\n\n---\nupdated-dependencies:\n- dependency-name: numba\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-03-25T18:55:05-06:00",
+          "tree_id": "e3ef1e69857e719f67b53a4a5856ac9ae6daf832",
+          "url": "https://github.com/andnp/forager/commit/2a262d2c0dcab1e0565b78b51684504aa655f561"
+        },
+        "date": 1711414582438,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 138990.29632105306,
+            "unit": "iter/sec",
+            "range": "stddev: 5.846588405315492e-7",
+            "extra": "mean: 7.194746874199796 usec\nrounds: 12958"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 59.67542856902643,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000906201153519519",
+            "extra": "mean: 16.757315765957213 msec\nrounds: 47"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 841.8975478012022,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000015722510372685387",
+            "extra": "mean: 1.1877929833763226 msec\nrounds: 782"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 63.698567201931134,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00006721716972589986",
+            "extra": "mean: 15.69894024193504 msec\nrounds: 62"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 791.2712024976718,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000042807060106407826",
+            "extra": "mean: 1.263789200015708 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.3078122333842003,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0057491971437414495",
+            "extra": "mean: 3.2487337784000148 sec\nrounds: 5"
           }
         ]
       }
