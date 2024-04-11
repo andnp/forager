@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1712151468012,
+  "lastUpdate": 1712794593782,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -2080,6 +2080,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.14974790402427152",
             "extra": "mean: 3.7148941719999984 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "2f15e5aef209b4cd3fcf2569a2f0fa4b8c8e3048",
+          "message": "chore(deps): bump typing-extensions from 4.10.0 to 4.11.0\n\nBumps [typing-extensions](https://github.com/python/typing_extensions) from 4.10.0 to 4.11.0.\n- [Release notes](https://github.com/python/typing_extensions/releases)\n- [Changelog](https://github.com/python/typing_extensions/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/python/typing_extensions/compare/4.10.0...4.11.0)\n\n---\nupdated-dependencies:\n- dependency-name: typing-extensions\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-04-10T20:15:11-04:00",
+          "tree_id": "603b1e692e11f8c753634d0f2f2a7494e95ad132",
+          "url": "https://github.com/andnp/forager/commit/2f15e5aef209b4cd3fcf2569a2f0fa4b8c8e3048"
+        },
+        "date": 1712794592887,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 138617.19602627217,
+            "unit": "iter/sec",
+            "range": "stddev: 5.699278500084545e-7",
+            "extra": "mean: 7.214112164052645 usec\nrounds: 14247"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 60.00999031317956,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000897637922817109",
+            "extra": "mean: 16.663892041661892 msec\nrounds: 48"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 831.0233572188117,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000032355509310741806",
+            "extra": "mean: 1.2033356118252836 msec\nrounds: 778"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 63.270545412122,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00018363530466651478",
+            "extra": "mean: 15.805142716667813 msec\nrounds: 60"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 787.4155870877058,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000026056308791160592",
+            "extra": "mean: 1.26997739998842 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.25804588389768235,
+            "unit": "iter/sec",
+            "range": "stddev: 0.1289725987467688",
+            "extra": "mean: 3.8752797948000195 sec\nrounds: 5"
           }
         ]
       }
