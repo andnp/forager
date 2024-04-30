@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1714445208759,
+  "lastUpdate": 1714445226717,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -2212,6 +2212,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.00982700478382791",
             "extra": "mean: 3.285750024799995 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "5abb81b32ad605c0916ea562f51d31ff39912852",
+          "message": "chore(deps): bump ruff from 0.3.5 to 0.4.2\n\nBumps [ruff](https://github.com/astral-sh/ruff) from 0.3.5 to 0.4.2.\n- [Release notes](https://github.com/astral-sh/ruff/releases)\n- [Changelog](https://github.com/astral-sh/ruff/blob/main/CHANGELOG.md)\n- [Commits](https://github.com/astral-sh/ruff/compare/v0.3.5...v0.4.2)\n\n---\nupdated-dependencies:\n- dependency-name: ruff\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-04-29T20:45:48-06:00",
+          "tree_id": "82a8e0d5435538b80bd61377989ead19cf555e6d",
+          "url": "https://github.com/andnp/forager/commit/5abb81b32ad605c0916ea562f51d31ff39912852"
+        },
+        "date": 1714445225859,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 138978.78229400248,
+            "unit": "iter/sec",
+            "range": "stddev: 5.017731715469313e-7",
+            "extra": "mean: 7.1953429400795255 usec\nrounds: 28244"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 62.440817000107,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0005118182583675308",
+            "extra": "mean: 16.015165208332977 msec\nrounds: 48"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 822.3409287552716,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000015766689519908555",
+            "extra": "mean: 1.216040653009501 msec\nrounds: 781"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 65.42696532169356,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00009592829697780176",
+            "extra": "mean: 15.284217983872026 msec\nrounds: 62"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 769.7331088997091,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000029763796965859893",
+            "extra": "mean: 1.2991515999999592 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.3090273483784833,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0018746852451703654",
+            "extra": "mean: 3.2359595525999962 sec\nrounds: 5"
           }
         ]
       }
