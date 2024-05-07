@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1714445226717,
+  "lastUpdate": 1715052089861,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -2278,6 +2278,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.0018746852451703654",
             "extra": "mean: 3.2359595525999962 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "ea9dc7a4bc8d11c96b0e171a791961bebb54cfcc",
+          "message": "chore(deps): bump jinja2 from 3.1.3 to 3.1.4\n\nBumps [jinja2](https://github.com/pallets/jinja) from 3.1.3 to 3.1.4.\n- [Release notes](https://github.com/pallets/jinja/releases)\n- [Changelog](https://github.com/pallets/jinja/blob/main/CHANGES.rst)\n- [Commits](https://github.com/pallets/jinja/compare/3.1.3...3.1.4)\n\n---\nupdated-dependencies:\n- dependency-name: jinja2\n  dependency-type: direct:production\n  update-type: version-update:semver-patch\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2024-05-06T21:20:16-06:00",
+          "tree_id": "824e39c43ed501978108e7d3ae3caa0a26ada834",
+          "url": "https://github.com/andnp/forager/commit/ea9dc7a4bc8d11c96b0e171a791961bebb54cfcc"
+        },
+        "date": 1715052089554,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 136547.98137027753,
+            "unit": "iter/sec",
+            "range": "stddev: 5.845611789602107e-7",
+            "extra": "mean: 7.323433052359063 usec\nrounds: 13996"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 60.22887075968523,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0006086565805444564",
+            "extra": "mean: 16.603333042554063 msec\nrounds: 47"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 824.499951346982,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00010554345076037812",
+            "extra": "mean: 1.2128563481008148 msec\nrounds: 790"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 65.14343462390204,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00007488411657591764",
+            "extra": "mean: 15.35074111110939 msec\nrounds: 63"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 749.0895939619818,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00013916894678652552",
+            "extra": "mean: 1.3349537999999939 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.30840115050423456,
+            "unit": "iter/sec",
+            "range": "stddev: 0.012485706385098489",
+            "extra": "mean: 3.2425300565999975 sec\nrounds: 5"
           }
         ]
       }
