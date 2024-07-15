@@ -63,7 +63,7 @@ setuptools==69.2.0
     # via nodeenv
 termcolor==2.4.0
     # via commitizen
-tomlkit==0.12.4
+tomlkit==0.13.0
     # via commitizen
 typing-extensions==4.11.0
     # via mypy
