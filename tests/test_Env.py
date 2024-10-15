@@ -4,6 +4,23 @@ from forager.Env import ForagerEnv
 from forager.config import ForagerConfig
 from forager.objects import Flower, Wall, Thorns
 
+def test_observation_shape():
+    config = ForagerConfig(
+            size=500,
+            object_types={
+                'wall': Wall,
+                'flower': Flower,
+                'thorns': Thorns,
+            },
+
+            observation_mode='objects',
+            aperture=9,
+            seed=2,
+        )
+    forager = ForagerEnv(config)
+    obs = forager.get_observation_shape()
+    assert obs == (9, 9, 3), f"Expected (9, 9, 3) but got {obs}"
+
 def test_pickleable():
     env = ForagerEnv(config=ForagerConfig(size=1, object_types={}))
     data = pickle.dumps(env)
@@ -19,10 +36,12 @@ def test_init():
         aperture=3,
     )
     env = ForagerEnv(config)
+    obs_shape = env.get_observation_shape()
 
     assert env._state == (4, 4)
     assert env._size == (8, 8)
     assert env._ap_size == (3, 3)
+    assert obs_shape == (3, 3, 0)
 
     # can specify sizes as uneven tuples
     config = ForagerConfig(
@@ -31,10 +50,12 @@ def test_init():
         aperture=(5, 1),
     )
     env = ForagerEnv(config)
+    obs_shape = env.get_observation_shape()
 
     assert env._state == (5, 2)
     assert env._size == (10, 5)
     assert env._ap_size == (5, 1)
+    assert obs_shape == (5, 1, 0)
 
     # can add objects
     config = ForagerConfig(
@@ -45,8 +66,10 @@ def test_init():
     )
     env = ForagerEnv(config)
     env.generate_objects(0.1, 'flower')
+    obs_shape = env.get_observation_shape()
 
     assert len(env._obj_store) == int(100 * 0.1)
+    assert obs_shape == (3, 3, 1)
 
     # world observation mode, apeture should be None
     config = ForagerConfig(
@@ -55,8 +78,10 @@ def test_init():
         observation_mode='world'
     )
     env = ForagerEnv(config)
+    obs_shape = env.get_observation_shape()
 
     assert env._ap_size is None
+    assert obs_shape == (10, 10, 1)
 
 def test_basic_movement():
     config = ForagerConfig(
