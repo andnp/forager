@@ -102,6 +102,14 @@ class ForagerEnv:
         if delta is not None:
             self._to_respawn[self._clock + delta].append(obj)
 
+    def get_observation_shape(self):
+        if self._c.observation_mode == 'objects':
+            return (self._ap_size[0], self._ap_size[1], len(self._names))
+        elif self._c.observation_mode == 'colors':
+            return (self._ap_size[0], self._ap_size[1], 3)
+        elif self._c.observation_mode == 'world':
+            return (self._size[0], self._size[1], len(self._names))
+
     def _respawn(self):
         if self._clock not in self._to_respawn:
             return
