@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1715052111075,
+  "lastUpdate": 1730388358722,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -2410,6 +2410,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.03172193502454191",
             "extra": "mean: 3.3319826790000038 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "yasuiniko@gmail.com",
+            "name": "Niko Yasui",
+            "username": "yasuiniko"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "0c9b8b36a9030a3e06e77b659d5735bf9d11a18c",
+          "message": "feat: add fn to get obs shape from env, tests\n\nAdded the ability to get the observation shape without calling env.start(). Added corresponding tests to test_Env.test_init.",
+          "timestamp": "2024-10-31T09:24:29-06:00",
+          "tree_id": "3e3cb487b68842bdcbea315b4e5b4d9c2e733ac5",
+          "url": "https://github.com/andnp/forager/commit/0c9b8b36a9030a3e06e77b659d5735bf9d11a18c"
+        },
+        "date": 1730388358426,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 141257.3322608686,
+            "unit": "iter/sec",
+            "range": "stddev: 5.837625656280355e-7",
+            "extra": "mean: 7.079278533685166 usec\nrounds: 13230"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 52.1499192294666,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0012752076202050394",
+            "extra": "mean: 19.175485116283053 msec\nrounds: 43"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 829.0275510133607,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00001495484545036461",
+            "extra": "mean: 1.206232529639879 msec\nrounds: 776"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 61.953883783154616,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0012503133836298734",
+            "extra": "mean: 16.141038122809373 msec\nrounds: 57"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 805.7607380502495,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000011957611392668622",
+            "extra": "mean: 1.2410632000012356 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.22915286096968093,
+            "unit": "iter/sec",
+            "range": "stddev: 0.1372302133686303",
+            "extra": "mean: 4.363899258200007 sec\nrounds: 5"
           }
         ]
       }
