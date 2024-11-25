@@ -59,7 +59,7 @@ pyyaml==6.0.1
 questionary==2.0.1
     # via commitizen
 ruff==0.4.3
-setuptools==69.2.0
+setuptools==70.0.0
     # via nodeenv
 termcolor==2.4.0
     # via commitizen
@@ -71,5 +71,5 @@ virtualenv==20.25.1
     # via pre-commit
 wcwidth==0.2.13
     # via prompt-toolkit
-zipp==3.18.1
+zipp==3.19.1
     # via importlib-metadata
