@@ -310,6 +310,34 @@ def test_object_location():
     assert f.current_location == (2, 0)
 
 
+
+
+def test_render():
+    config = ForagerConfig(
+        size=5,
+        object_types={
+            "flower": Flower,
+        },
+        aperture=3,
+        seed=1,
+    )
+    env = ForagerEnv(config)
+    env.add_object(Flower((0, 0)))
+    env.start()
+    rgb_array = env.render()
+    assert rgb_array.shape == (5, 5, 3) and rgb_array.dtype == np.uint8
+    np.testing.assert_array_equal(
+        rgb_array,
+        [
+            [[0, 0, 0], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255]],
+            [[255, 255, 255], [204, 204, 255], [204, 204, 255], [204, 204, 255], [255, 255, 255]],
+            [[255, 255, 255], [204, 204, 255], [0, 0, 255], [204, 204, 255], [255, 255, 255]],
+            [[255, 255, 255], [204, 204, 255], [204, 204, 255], [204, 204, 255], [255, 255, 255]],
+            [[255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255], [255, 255, 255]],
+        ],
+    )
+
+
 def test_checkpointing():
     config = ForagerConfig(
         size=5,
