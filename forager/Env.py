@@ -115,19 +115,20 @@ class ForagerEnv:
         alpha = 0.2
 
         # draw agent aperture
-        ax = int(self._ap_size[0] // 2)
-        ay = int(self._ap_size[1] // 2)
+        if self._ap_size is not None:
+            ax = int(self._ap_size[0] // 2)
+            ay = int(self._ap_size[1] // 2)
 
-        xs = range(self._state[0] - ax, self._state[0] + ax + 1)
-        ys = range(self._state[1] - ay, self._state[1] + ay + 1)
+            xs = range(self._state[0] - ax, self._state[0] + ax + 1)
+            ys = range(self._state[1] - ay, self._state[1] + ay + 1)
 
-        for x in xs:
-            for y in ys:
-                x = x % self._size[0]
-                y = y % self._size[1]
-                c = (x, y)
-                idx = nbu.ravel(c, self._size)
-                out[y, x] = (1 - alpha) * out[y, x] + alpha * agent_color
+            for x in xs:
+                for y in ys:
+                    x = x % self._size[0]
+                    y = y % self._size[1]
+                    c = (x, y)
+                    idx = nbu.ravel(c, self._size)
+                    out[y, x] = (1 - alpha) * out[y, x] + alpha * agent_color
 
         return out
 
