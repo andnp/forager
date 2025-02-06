@@ -79,7 +79,7 @@ def get_world_vision(
     names: Dict[str, int],
 ) -> np.ndarray:
     dims = len(names)
-    out = np.zeros((size[0], size[1], dims), dtype=np.bool_)
+    out = np.zeros((size[1], size[0], dims), dtype=np.bool_)
 
     for i, x in enumerate(range(size[0])):
         for j, y in enumerate(range(size[1])):
