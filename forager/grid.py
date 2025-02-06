@@ -59,3 +59,15 @@ def sample_unpopulated(rng: np.random.Generator, size: Size, objs: Dict[int, Any
             return c
 
     return c
+
+@nbu.njit
+def sample_unpopulated_locations(rng: np.random.Generator, size: Size, objs: Dict[int, Any], locations: list[int]):
+    c = (0, 0)
+    total = len(locations)
+    for _ in range(10):
+        j = rng.integers(0, total)
+        idx = locations[j]
+        c = nbu.unravel(idx, size)
+        if idx not in objs:
+            return c
+    return c

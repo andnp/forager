@@ -93,6 +93,10 @@ class ForagerEnv:
         size = self._size[0] * self._size[1]
         self._obj_store.add_n_deferred_objects(name, int(size * freq))
 
+    def generate_objects_locations(self, freq: float, name: str, locations: List[Coords]):
+        size = len(locations)
+        self._obj_store.add_n_deferred_objects_locations(name, int(size * freq), locations)
+
     def remove_object(self, coords: Coords):
         idx = nbu.ravel(coords, self._size)
         obj = self._obj_store.remove_object(idx)
