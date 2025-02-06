@@ -97,6 +97,38 @@ class ForagerEnv:
         size = len(locations)
         self._obj_store.add_n_deferred_objects_locations(name, int(size * freq), locations)
 
+    def render(self):
+        out = np.ones((self._size[1], self._size[0], 3), dtype=np.uint8) * 255
+        for x in range(self._size[0]):
+            for y in range(self._size[1]):
+                c = (x, y)
+                idx = nbu.ravel(c, self._size)
+                if idx in  self._obj_store.idx_to_name:
+                    name =  self._obj_store.idx_to_name[idx]
+                    color = self._obj_store.name_to_color[name]
+                    out[y, x] = color
+
+        ax = int(self._ap_size[0] // 2)
+        ay = int(self._ap_size[1] // 2)
+
+        xs = range(self._state[0] - ax, self._state[0] + ax + 1)
+        ys = range(self._state[1] - ay, self._state[1] + ay + 1)
+
+
+        agent_color = np.array((0, 0, 255), dtype=np.uint8)
+        out[self._state[1], self._state[0]] = agent_color
+        alpha = 0.2
+
+        for i, x in enumerate(xs):
+            for j, y in enumerate(ys):
+                x = x % self._size[0]
+                y = y % self._size[1]
+                c = (x, y)
+                idx = nbu.ravel(c, self._size)
+                out[y, x] = (1 - alpha) * out[y, x] + alpha * agent_color
+
+        return out
+
     def remove_object(self, coords: Coords):
         idx = nbu.ravel(coords, self._size)
         obj = self._obj_store.remove_object(idx)
