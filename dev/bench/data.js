@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1739042915040,
+  "lastUpdate": 1739042927769,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -2542,6 +2542,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.09210325264742222",
             "extra": "mean: 3.3316876172000036 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "51893352fc1594060c1978a67f324c85ed4b5dac",
+          "message": "chore(deps): bump tomlkit from 0.12.4 to 0.13.0\n\nBumps [tomlkit](https://github.com/sdispater/tomlkit) from 0.12.4 to 0.13.0.\n- [Release notes](https://github.com/sdispater/tomlkit/releases)\n- [Changelog](https://github.com/python-poetry/tomlkit/blob/master/CHANGELOG.md)\n- [Commits](https://github.com/sdispater/tomlkit/compare/0.12.4...0.13.0)\n\n---\nupdated-dependencies:\n- dependency-name: tomlkit\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2025-02-08T12:27:32-07:00",
+          "tree_id": "36ea3879e495a0d4d1407c48b6975771b8e71fc8",
+          "url": "https://github.com/andnp/forager/commit/51893352fc1594060c1978a67f324c85ed4b5dac"
+        },
+        "date": 1739042927343,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 136721.43125789243,
+            "unit": "iter/sec",
+            "range": "stddev: 8.837488126412836e-7",
+            "extra": "mean: 7.3141422730847365 usec\nrounds: 19322"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 64.96537301034137,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000434637002528714",
+            "extra": "mean: 15.392815490196869 msec\nrounds: 51"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 808.8791965704825,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00005997314367809784",
+            "extra": "mean: 1.2362785496769346 msec\nrounds: 775"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 64.92036484193787,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0002452703960588969",
+            "extra": "mean: 15.40348706349245 msec\nrounds: 63"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 797.7523805341207,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000012337707150929544",
+            "extra": "mean: 1.253521799998225 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.3035389534277146,
+            "unit": "iter/sec",
+            "range": "stddev: 0.020556694706386415",
+            "extra": "mean: 3.294470079400014 sec\nrounds: 5"
           }
         ]
       }
