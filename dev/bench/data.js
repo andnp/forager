@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1730388358722,
+  "lastUpdate": 1739042915040,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -2476,6 +2476,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.1372302133686303",
             "extra": "mean: 4.363899258200007 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "88914e21517525668ca056be74f821c9b3fc3d99",
+          "message": "chore(deps): bump setuptools from 69.2.0 to 72.1.0\n\nBumps [setuptools](https://github.com/pypa/setuptools) from 69.2.0 to 72.1.0.\n- [Release notes](https://github.com/pypa/setuptools/releases)\n- [Changelog](https://github.com/pypa/setuptools/blob/main/NEWS.rst)\n- [Commits](https://github.com/pypa/setuptools/compare/v69.2.0...v72.1.0)\n\n---\nupdated-dependencies:\n- dependency-name: setuptools\n  dependency-type: direct:production\n  update-type: version-update:semver-major\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2025-02-08T12:27:21-07:00",
+          "tree_id": "3e2e98b8d5631e993f6b1e1878a84d80817868a7",
+          "url": "https://github.com/andnp/forager/commit/88914e21517525668ca056be74f821c9b3fc3d99"
+        },
+        "date": 1739042914745,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 134544.431497847,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0000014329288020148296",
+            "extra": "mean: 7.4324889470881015 usec\nrounds: 14114"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 64.44710875666709,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0004581212926443055",
+            "extra": "mean: 15.516599879999262 msec\nrounds: 50"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 816.4357180873133,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000012887104796052003",
+            "extra": "mean: 1.224836172457922 msec\nrounds: 777"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 63.71260064767338,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00010907527224884678",
+            "extra": "mean: 15.695482366666148 msec\nrounds: 60"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 793.6494079163623,
+            "unit": "iter/sec",
+            "range": "stddev: 0.000008528824556789745",
+            "extra": "mean: 1.2600021999958244 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.300148187614424,
+            "unit": "iter/sec",
+            "range": "stddev: 0.09210325264742222",
+            "extra": "mean: 3.3316876172000036 sec\nrounds: 5"
           }
         ]
       }
