@@ -1,5 +1,5 @@
 window.BENCHMARK_DATA = {
-  "lastUpdate": 1739042927769,
+  "lastUpdate": 1741658392500,
   "repoUrl": "https://github.com/andnp/forager",
   "entries": {
     "Python Benchmark with pytest-benchmark": [
@@ -2608,6 +2608,72 @@ window.BENCHMARK_DATA = {
             "unit": "iter/sec",
             "range": "stddev: 0.020556694706386415",
             "extra": "mean: 3.294470079400014 sec\nrounds: 5"
+          }
+        ]
+      },
+      {
+        "commit": {
+          "author": {
+            "email": "49699333+dependabot[bot]@users.noreply.github.com",
+            "name": "dependabot[bot]",
+            "username": "dependabot[bot]"
+          },
+          "committer": {
+            "email": "andnpatterson@gmail.com",
+            "name": "Andy Patterson",
+            "username": "andnp"
+          },
+          "distinct": true,
+          "id": "8ce1573d6ef73e9417073fd1573130a0ab38cef3",
+          "message": "chore(deps): bump virtualenv from 20.25.1 to 20.29.3\n\nBumps [virtualenv](https://github.com/pypa/virtualenv) from 20.25.1 to 20.29.3.\n- [Release notes](https://github.com/pypa/virtualenv/releases)\n- [Changelog](https://github.com/pypa/virtualenv/blob/main/docs/changelog.rst)\n- [Commits](https://github.com/pypa/virtualenv/compare/20.25.1...20.29.3)\n\n---\nupdated-dependencies:\n- dependency-name: virtualenv\n  dependency-type: direct:production\n  update-type: version-update:semver-minor\n...\n\nSigned-off-by: dependabot[bot] <support@github.com>",
+          "timestamp": "2025-03-10T19:58:35-06:00",
+          "tree_id": "f666096c1a66d4fd2e9170ad2862fc3878c359b9",
+          "url": "https://github.com/andnp/forager/commit/8ce1573d6ef73e9417073fd1573130a0ab38cef3"
+        },
+        "date": 1741658392062,
+        "tool": "pytest",
+        "benches": [
+          {
+            "name": "tests/test_Env.py::test_benchmark_vision",
+            "value": 137104.50812388083,
+            "unit": "iter/sec",
+            "range": "stddev: 8.018762387430565e-7",
+            "extra": "mean: 7.293706193062956 usec\nrounds: 16082"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_creation",
+            "value": 64.71692013344972,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0003402132304747494",
+            "extra": "mean: 15.451909607842076 msec\nrounds: 51"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env",
+            "value": 821.1498716488771,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00007082498753778156",
+            "extra": "mean: 1.2178044891999922 msec\nrounds: 787"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_big_env",
+            "value": 64.38328126645229,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00006643446276252193",
+            "extra": "mean: 15.531982532258144 msec\nrounds: 62"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_color",
+            "value": 795.160968409198,
+            "unit": "iter/sec",
+            "range": "stddev: 0.00000845827459933716",
+            "extra": "mean: 1.257607000002281 msec\nrounds: 5"
+          },
+          {
+            "name": "tests/test_Env.py::test_benchmark_small_env_world",
+            "value": 0.298039492871885,
+            "unit": "iter/sec",
+            "range": "stddev: 0.0195281124320657",
+            "extra": "mean: 3.3552600374000066 sec\nrounds: 5"
           }
         ]
       }
