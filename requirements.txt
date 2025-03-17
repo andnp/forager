@@ -51,7 +51,7 @@ py-cpuinfo==9.0.0
     # via pytest-benchmark
 pytest==8.1.1
     # via pytest-benchmark
-pytest-benchmark==4.0.0
+pytest-benchmark==5.1.0
 pyyaml==6.0.1
     # via
     #   commitizen
